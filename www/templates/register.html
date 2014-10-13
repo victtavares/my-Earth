@@ -1,0 +1,32 @@
+<div class="modal">
+
+    <!-- Modal header bar -->
+    <ion-header-bar class="bar-secondary">
+        <h1 class="title">New User</h1>
+        <button class="button button-clear button-positive" ng-click="closeSignUp()">Cancel</button>
+    </ion-header-bar>
+
+    <!-- Modal content area -->
+    <ion-content>
+
+        <form ng-submit="signUp()">
+            <div class="list">
+                <label class="item item-input">
+                    <span class="input-label">Email</span>
+                    <input type="text" ng-model="registerData.username">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Password</span>
+                    <input type="password" ng-model="registerData.password">
+                </label>
+            </div>
+            <div class="padding">
+                <button class="button button-block button-positive" type="submit">Sign up</button>
+            </div>
+
+        </form>
+
+
+    </ion-content>
+
+</div>
