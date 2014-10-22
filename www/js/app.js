@@ -1,5 +1,10 @@
 
-var app = angular.module('earthApp', ['ionic','earthApp.controllers']);
+var app = angular.module('earthApp', [
+    'ionic',
+    'controllers.users',
+    'controllers.main',
+    'controllers.timeline'
+]);
 
 
 
@@ -77,14 +82,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
         .state('login', {
             url:"/",
             templateUrl:"templates/login.html",
-            controller:"userController"
+            controller:"userCtrl"
         })
 
         .state('app', {
             url: "/app",
             abstract: true,
             templateUrl: "templates/menu.html",
-            controller:"MainController"
+            controller:"mainCtrl"
         })
 
         .state('app.timeline', {
@@ -92,7 +97,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
             views: {
                 "menuContent" :{
                     templateUrl: "templates/timeline.html",
-                    controller:'apListController'
+                    controller:'timelineCtrl'
                 }
             }
         });
