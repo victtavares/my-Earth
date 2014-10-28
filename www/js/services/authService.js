@@ -15,7 +15,6 @@ earthService.factory('authentication',
             service.ClearCredentials = function () {
                 delete $rootScope.globals;
                 window.localStorage.removeItem('globals');
-                window.localStorage.removeItem('Aps');
             };
 
 
@@ -28,7 +27,6 @@ earthService.factory('authentication',
                         apiKey: apiKey
                     }
                 };
-                //console.log("foi aqui no localStorage!");
                 window.localStorage['globals'] = JSON.stringify($rootScope.globals);
             };
 

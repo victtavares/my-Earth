@@ -3,49 +3,32 @@
         <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
     </ion-nav-buttons>
     <ion-nav-buttons side="right">
-        <button class="button button-icon icon ion-leaf" ng-click="modal.show()"></button>
+        <button class="button button-icon icon ion-leaf balanced" ng-click="modal.show()"></button>
     </ion-nav-buttons>
     <ion-content class="has-header" ng-controller="timelineCtrl">
-
-        <!--div class="list card">
-            <div class="item item-avatar">
-                <img src="/img/tree2.png">
-                <h2>Congratulations!</h2>
-                <p>You saved 10 trees! What about more?</p>
-            </div>
-        </div>
-        <h4 style="text-align:center"> Recent Activities</h4-->
         <div class="list card">
 
-            <a class="item item-avatar" href="#">
+            <div class="item item-avatar">
                 <img src="/img/noimage.jpg">
                 <h2>Walk Home</h2>
-                <p>You saved 5 carbons in this activity!</p>
+                <p>You saved 3 trees!</p>
+            </div>
 
-            </a>
-
-            <a class="item item-avatar" href="#">
-                <img src="/img/noimage.jpg">
-                <h2>Ride a bicycle</h2>
-                <p>You saved 10 carbons in this activity!</p>
-
-            </a>
-
-            <a class="item item-avatar" href="#">
-                <img src="/img/noimage.jpg">
-                <h2>Recycle</h2>
-                <p>You saved 20 carbons in this activity!</p>
-
-            </a>
-
-            <a class="item item-avatar" href="#">
-                <img src="/img/noimage.jpg">
-                <h2>Buy a used computer</h2>
-                <p>You saved 30 carbons in this activity!</p>
-
-            </a>
+            <div class="item tabs tabs-secondary tabs-icon-left">
+                <a class="tab-item" href="#">
+                    <i class="icon ion-share"></i>
+                    Share
+                </a>
+                <a class="tab-item" href="#">
+                    <i class="icon ion-forward"></i>
+                    Do again
+                </a>
+            </div>
 
         </div>
+
+
+
 
 
     </ion-content>

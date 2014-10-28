@@ -1,9 +1,9 @@
-<ion-nav-bar class="bar-stable nav-title-slide-ios7">
+<ion-nav-bar class="bar-light nav-title-slide-ios7">
 </ion-nav-bar>
-<ion-view title="My Earth">
-        <ion-content ng-controller="userCtrl">
+<ion-view title="My Earth" class="headerText">
+        <ion-content ng-controller="userCtrl" class="content-bg">
             <form ng-submit="login()">
-                <div class="list">
+                <div class="list list-inset">
                     <label class="item item-input">
                         <span class="input-label">Email</span>
                         <input type="text" ng-model="loginData.username">
@@ -14,17 +14,32 @@
                     </label>
                 </div>
                     <div class="padding">
-                        <button class="button button-block button-positive" type="submit">Log in</button>
+                        <button class="button button-block button-balanced" type="submit">Log in</button>
                     </div>
 
             </form>
 
 
-            <div class="row">
-                <button class="button button-block button-clear button-positive" ng-click="modal.show()">Need an Account? Sign up</button>
-            </div>
+
+
+
+
 
         </ion-content>
+    <div class="fixed-outside">
+        <div class="row center">
+            <div class = "col"><h4> Need an Account?</h4></div>
+        </div>
+
+        <div class="row center">
+            <div class="col">
+                <button class="button button-light" ng-click="modal.show()">Sign up Now</button>
+            </div>
+        </div>
+    </div>
+
+
+
  </ion-view>
 
 

@@ -3,7 +3,7 @@ var app = angular.module('earthApp', [
     'ionic',
     'controllers.users',
     'controllers.main',
-    'controllers.timeline'
+    'controllers.timeline',
 ]);
 
 
