@@ -1,7 +1,9 @@
-var paradropCtrl = angular.module('controllers.timeline',[]);
+var paradropCtrl = angular.module('controllers.timeline',[
+    'services.model.activities'
+]);
 
 paradropCtrl.controller('timelineCtrl',
-    function($scope,$ionicModal) {
+    function($scope,$ionicModal, modelActivity) {
 
 
         // ---------------------- Loading Modal ---------------------
@@ -20,5 +22,15 @@ paradropCtrl.controller('timelineCtrl',
             $scope.modal.hide();
         }
 
+
+        $scope.activityList = [{activityName: "Walk Home", activityDescription: "You saved 3 trees!"},
+            {activityName: "Refill Water Bottle", activityDescription: "You saved 2 trees!"}];
+
+
+        $scope.allActivitiesList = modelActivity.getAll();
+
+        $scope.addActivity = function ($index) {
+            console.log("index: " + $index);
+        }
 
     });

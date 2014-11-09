@@ -8,13 +8,16 @@
     </ion-pane>
 
     <ion-side-menu side="left">
-        <header class="bar bar-header">
+        <header class="bar bar-header bar-positive">
             <h1 class="title">Menu</h1>
         </header>
         <ion-content class="has-header">
-            <ion-list>
+            <ion-list >
+                <ion-item nav-clear menu-close href="#/app/profile">
+                    Profile
+                </ion-item>
                 <ion-item nav-clear menu-close href="#/app/timeline">
-                    Timeline
+                    Activities
                 </ion-item>
                 <ion-item nav-clear menu-close href="#/" ng-click="logout()">
                     Logout

@@ -1,16 +1,16 @@
 <div class="modal">
 
     <!-- Modal header bar -->
-    <ion-header-bar class="bar-light nav-title-slide-ios7">
+    <ion-header-bar class="bar-positive headerBG nav-title-slide-ios7">
         <h1 class="title">Activities</h1>
-        <button class="button button-clear button-balanced" ng-click="closeModalButton()">Cancel</button>
+        <button class="button button-clear button-light headerButton" ng-click="closeModalButton()">Cancel</button>
     </ion-header-bar>
 
     <!-- Modal content area -->
     <ion-content class="content-bg">
 
         <div id="search-bar">
-            <div class="item item-input-inset">
+            <div class="item search item-input-inset"-->
                 <label class="item-input-wrapper" id="search-input">
                     <i class="icon ion-search placeholder-icon"></i>
                     <input type="text" placeholder="Search Activities" ng-model="query" ng-change="search()">
@@ -18,27 +18,28 @@
             </div>
         </div>
 
-        <div class="list card">
+        <div class="list card" ng-repeat="activity in allActivitiesList">
 
             <div class="item item-avatar">
                 <img src="/img/noimage.jpg">
-                <h2>Walk Home</h2>
-                <p>3 Points</p>
+                <h2>{{activity.activityName}}</h2>
+                <p>{{activity.points}}</p>
             </div>
 
             <div class="item item-body">
 
-                <h2>Did you walk home today instead of get a bus? Great! You just saved 3 trees!</h2>
+                <h2>{{activity.activityDescription}}</h2>
                 <p></p>
                 <p> How often do you do this activity?</p>
                 <label class="item item-input item-select">
                     <div class="input-label">
                         Frequency
                     </div>
-                    <select>
+                    <select ng-model = "addActivityData.frequency">
+                        <option selected>Just once</option>
                         <option>Every Day</option>
                         <option>Business Days</option>
-                        <option selected>Once a Week</option>
+                        <option>Once a Week</option>
                         <option>Once a Month</option>
                     </select>
                 </label>
@@ -48,18 +49,12 @@
 
 
 
-            <a class="item item-icon-left balanced" href="#">
+            <div class="item item-icon-left balanced" ng-click="addActivity(activity.id)">
                 <i class="icon ion-happy"></i>
                 Do it!
-            </a>
+            </div>
 
         </div>
-
-
-
-
-
-
     </ion-content>
 
 </div>

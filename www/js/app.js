@@ -4,6 +4,7 @@ var app = angular.module('earthApp', [
     'controllers.users',
     'controllers.main',
     'controllers.timeline',
+    'controllers.profile'
 ]);
 
 
@@ -100,7 +101,13 @@ app.config(function($stateProvider, $urlRouterProvider) {
                     controller:'timelineCtrl'
                 }
             }
-        });
+        })
+
+    .state('app.profile', {
+        url:"/profile",
+        templateUrl:"templates/profile.html",
+        controller:"profileCtrl"
+    });
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/');

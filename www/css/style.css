@@ -1,11 +1,7 @@
 /* Empty. Add your own CSS if you like */
 
 
-#mainHeader {
 
-    background: #33AD5C !important;
-
-}
 
 .green-background {
     background-color:#68d668 !important;
@@ -14,10 +10,25 @@
 .content-bg {
     background: #FAFAFA;
 }
+
+.search {
+    border-top: 0px;
+    background: #FAFAFA;
+}
+
+
+.headerButton {
+    color: #ffffff !important;
+}
+
+.headerBG {
+    background: #75d075 !important;
+}
+
+
 .fixed-outside{
     position: absolute;
     bottom: 0;
-    background:#FAFAFA;
     width: 100%;
     height: 10em;
     text-align:center;
@@ -26,4 +37,25 @@
 
 .center{
     text-align:center;
-}/* Empty. Add your own CSS if you like */
+}
+
+
+.menuBG {
+    background: #DCEDFF;
+}
+.menuTab {
+    background: #e4e4e4;
+}
+
+.cardColor {
+    background: #90f690;
+}
+
+.cardInnerColor {
+    background: #b6f6b6;
+}
+
+
+.textColor {
+    color: #ffffff;
+}
