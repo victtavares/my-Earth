@@ -1,0 +1,28 @@
+<div class="modal">
+    <!-- Modal header bar -->
+    <ion-header-bar class="bar-positive headerBG">
+    <h1 class="title headerText">Forgot Password</h1>
+    <a ng-click="closeForgot()"><button class="button button-clear button-dark">Cancel</button></a>
+</ion-header-bar>
+
+<!-- Modal content area -->
+<ion-content class="contentBG">
+
+<form ng-submit="checkUserInfoForNewPass()">
+    <p id="forgotText">Enter your email and we'll shoot you a link to reset your password.</p>
+    
+    <div class="list list-inset">
+        <label class="item item-input">
+            <span class="input-label">Email</span>
+            <input type="email" ng-model="forgotData.email">
+        </label>
+    </div>
+    
+    <div class="padding">
+        <button class="button button-block button-balanced login-button green-background" type="submit">Email Me</button>
+    </div>
+
+</form>
+
+</ion-content>
+</div>

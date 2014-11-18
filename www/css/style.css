@@ -1,7 +1,21 @@
 /* Empty. Add your own CSS if you like */
 
 
+#forgotPassText {
 
+  text-align: center;
+  font-size: 14px;
+  color: #002242;
+
+}
+
+#forgotText {
+
+  text-align: center;
+  font-size: 14px;
+  margin: 16px;
+
+}
 
 .green-background {
     background-color:#68d668 !important;

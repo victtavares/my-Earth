@@ -1,7 +1,4 @@
 var earthService = angular.module('services.auth', []);
-//return 200 when the authentication is valid
-//return error message if the auth is not valid
-//return 400 if found a error connecting
 
 earthService.factory('authentication',
     ['$http', '$rootScope',
