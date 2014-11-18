@@ -1,7 +1,8 @@
 
 var app = angular.module('earthApp', [
     'ionic',
-    'controllers.users',
+    'controllers.login',
+    'controllers.register',
     'controllers.main',
     'controllers.timeline',
     'controllers.profile'
@@ -83,7 +84,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
         .state('login', {
             url:"/",
             templateUrl:"templates/login.html",
-            controller:"userCtrl"
+            controller:"loginCtrl"
         })
 
         .state('app', {
