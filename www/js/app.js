@@ -104,13 +104,17 @@ app.config(function($stateProvider, $urlRouterProvider) {
             }
         })
 
-    .state('app.profile', {
-        url:"/profile",
-        templateUrl:"templates/profile.html",
-        controller:"profileCtrl"
-    });
+        .state('app.profile', {
+            url:"/profile",
+            templateUrl:"templates/profile.html",
+            controller:"profileCtrl"
+        });
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/');
+    if(Parse.User.current()) {
+      $urlRouterProvider.otherwise('/app/timeline');
+    } else {
+      $urlRouterProvider.otherwise('/');
+    }
 });
 

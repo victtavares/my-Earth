@@ -7,13 +7,13 @@
     </ion-header-bar>
 
     <!-- Modal content area -->
-    <ion-content class="content-bg" ng-controller="registerCtrl">
+    <ion-content class="content-bg has-header" ng-controller="registerCtrl">
 
         <form ng-submit="signUp()">
             <div class="list list-inset">
                 <label class="item item-input">
                     <span class="input-label">Email</span>
-                    <input type="text" ng-model="registerData.username" value = "test">
+                    <input type="email" ng-model="registerData.username">
                 </label>
                 <label class="item item-input">
                     <span class="input-label">Password</span>

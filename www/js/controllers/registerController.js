@@ -5,53 +5,60 @@ var myEarthCtrl = angular.module('controllers.register',[
 
 
 myEarthCtrl.controller('registerCtrl',
-    function ($scope, $rootScope,$ionicPopup,$ionicLoading,$state, authentication, $ionicModal, modelUser) {
+    function($scope, $ionicLoading, $ionicPopup, $state) {
 
-     // ---------------------- Sign up ---------------------
-        $scope.signUp = function () {
+    // initialization for certain vars
 
-            //$scope.registerData = {};
-            $ionicLoading.show({
-                template: 'Loading...'
+    $scope.registerData = {};
+
+    
+
+    // ---------------------- Sign up ---------------------
+
+    $scope.signUp = function () {
+
+        $ionicLoading.show({
+          template: 'Loading...'
+        });
+        if (($scope.registerData) && ($scope.registerData.password) && ($scope.registerData.username) ) {
+
+            var user = new Parse.User();
+
+            user.set("username", $scope.registerData.username);
+            user.set("password", $scope.registerData.password);
+
+            console.log('parse request: user signup');
+
+            user.signUp(null, {
+                success: function(user) {
+
+                    $ionicLoading.hide();
+                    console.log('signup successful');
+                    $state.go('app.timeline');
+
+                },
+
+                error: function(user, error) {
+
+                  $ionicLoading.hide();
+                  $ionicPopup.alert({
+                    title: 'Error',
+                    template: "<p>Error in account creation. Please try again.</p>",
+                    okText: 'OK'
+                  });
+
+                }
             });
-            if (($scope.registerData) && ($scope.registerData.password) && ($scope.registerData.username)) {
-                modelUser.createUser($scope.registerData.username, $scope.registerData.password)
-                    .success(function (data) {
-                        console.log(data);
-                        $ionicLoading.hide();
-                        if (!data['error']) {
-                            $scope.modal.hide();
-                            $state.go('app.timeline');
 
-                        } else {
-                            $ionicLoading.hide();
-                            $ionicPopup.alert({
-                                title: 'Register Error',
-                                template: "<p>" +data["message"] +"</p>",
-                                okText: 'Cancel'
-                            });
-                        }
+        } else {
 
-                    })
-                    .error(function (data) {
-                        console.log("this is the data" + data);
-                        $ionicLoading.hide();
-                        $ionicPopup.alert({
-                            title: 'Connection Error',
-                            template: "<p>Server connection failure</p>",
-                            okText: 'Cancel'
-                        });
-                    });
-            } else {
-                $ionicLoading.hide();
-                $ionicPopup.alert({
-                    title: 'Blank fields',
-                    template: "<p>A username and password must be entered</p>",
-                    okText: 'Cancel'
-                });
-            }
-
-
+            $ionicLoading.hide();
+            $ionicPopup.alert({
+              title: 'Blank fields',
+              template: "<p>You missed one or more entries</p>",
+              okText: 'OK'
+            });
         }
+    }
 
-    });
+});

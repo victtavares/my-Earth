@@ -3,7 +3,7 @@ var paradropCtrl = angular.module('controllers.timeline',[
 ]);
 
 paradropCtrl.controller('timelineCtrl',
-    function($scope,$ionicModal, modelActivity) {
+    function($scope,$ionicModal, modelActivity, $state) {
 
 
         // ---------------------- Loading Modal ---------------------
@@ -32,5 +32,6 @@ paradropCtrl.controller('timelineCtrl',
         $scope.addActivity = function ($index) {
             console.log("index: " + $index);
         }
+
 
     });

@@ -8,47 +8,46 @@ myEarthCtrl.controller('loginCtrl',
 
         // ---------------------- Login Function ---------------------
         $scope.login = function () {
-            // Loading...
-            $ionicLoading.show({
-                template: 'Loading...'
-            });
-            //Authentication service = connect to the PHP API
-            if (($scope.loginData) && ($scope.loginData.password) && ($scope.loginData.username)) {
-                authentication.Login($scope.loginData.username, $scope.loginData.password)
-                .success(function (data) {
-                    $ionicLoading.hide();
-                    if (data && (!data['error'])) {
-                        authentication.setCredentials($scope.loginData.username, data["apiKey"]);
-                        $state.go('app.timeline');
+        // Loading...
+        $ionicLoading.show({
+            template: 'Loading...'
+        });
 
-                    } else {
-                        $ionicLoading.hide();
-                        $ionicPopup.alert({
-                            title: 'Authentication Error',
-                            template: "<p>Username or Password is not correct</p>",
-                            okText: 'Cancel'
-                        });
-                    }
+        if ($scope.loginData && $scope.loginData.username && $scope.loginData.password) {
 
-                })
-                .error(function (data) {
+            console.log('parse request: user login');
+            Parse.User.logIn($scope.loginData.username, $scope.loginData.password, {
+                success: function(privUser) {
+
                     $ionicLoading.hide();
+                    $state.go('app.timeline');
+
+                },
+
+                error: function(user, error) {
+                    // The login failed. Check error to see why.
+                    $ionicLoading.hide();
+
                     $ionicPopup.alert({
-                        title: 'Connection Error',
-                        template: "<p>Server connection failure</p>",
-                        okText: 'Cancel'
+                        title: 'Login Failed',
+                        template: "<p>Username/Password combination is incorrect.</p>",
+                        okText: 'OK'
                     });
-                });
-            } else {
-                $ionicLoading.hide();
-                $ionicPopup.alert({
-                    title: 'Blank fields',
-                    template: "<p>A username and password must be entered</p>",
-                    okText: 'Cancel'
-                });
-            }
+                    
+                    console.log("login failed: " + error.message);
+                }
+            });
 
-        };
+
+        } else {
+          $ionicLoading.hide();
+          $ionicPopup.alert({
+            title: 'Blank Fields',
+            template: "<p>You must enter a username and password to log in.</p>",
+            okText: 'OK'
+        });
+    }
+};
 
 
         // ---------------------- Loading Modal ---------------------
@@ -82,29 +81,52 @@ myEarthCtrl.controller('loginCtrl',
         }
 
 
-        $scope.checkUserInfoForNewPass = function () {
 
-            var email = $scope.forgotData.email;
+$scope.checkUserInfoForNewPass = function () {
 
-            //TODO: check if email is found then sendNewPasswordEmail
+    var email = $scope.forgotData.email;
 
-            //if found
-            $scope.closeForgot();
-            sendNewPasswordEmail(email);
+    var query = new Parse.Query(Parse.User);
+    query.equalTo("username", email);
 
-            //if not found
+    console.log('parse request: check email to reset password');
+    query.find({
+      success: function(users) {
+
+        if (users.length > 0) {
+          $scope.closeForgot();
+          sendNewPasswordEmail(email);
+      }
+
+      else {
+          $ionicPopup.alert({
+            title: 'Error',
+            template: "<p>Could not find user account.</p>",
+            okText: 'OK'
+        });
+      }
+  }
+});
+
+    
+}
+
+function sendNewPasswordEmail(email) {
+
+    console.log('parse request: send password reset email');
+    Parse.User.requestPasswordReset(email, {
+        success:function() {
             $ionicPopup.alert({
-                title: 'Authentication Error',
-                template: "<p>Email not found.</p>",
+                title: 'Email Sent Successfully',
             });
-
+        },
+        error:function(error) {
+            $ionicPopup.alert({
+              title: error
+              });
         }
-
-        function sendNewPasswordEmail(email) {
-
-            //TODO: SEND PASSWORD RESET EMAIL
-
-        } 
+    });
+} 
 
 
 

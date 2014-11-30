@@ -1,0 +1,74 @@
+
+/*PROFILE STYLE*/
+
+.profile-icon-water {
+  font-size: 72px;
+  color : blue;
+}
+
+.profile-icon-leaf {
+  font-size: 72px;
+  color : green;
+}
+
+.profile-section {
+  margin-left: 4px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+#profile-icon {
+  width: 92%;
+  text-align: center;
+  margin: 4%;
+}
+
+.right {
+  text-align: right;
+}
+
+.middle {
+  position: relative;
+  bottom: 7px;
+}
+
+.horiz-break {
+  width: 95%;
+}
+
+.graphSelector {
+  height: 40px;
+}
+
+.graphSelectorTitle {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.statistic {
+  height: 30px;
+}
+
+.statTitle {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.stat {
+  font-size: 14px;
+}
+
+.statMiddle {
+  position: relative;
+  bottom: 10px;
+}
+
+#myChart {
+
+  margin-top: 8px;
+
+}
+
+#chartDiv {
+  text-align: center;
+}
