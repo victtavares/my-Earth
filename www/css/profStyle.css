@@ -17,10 +17,10 @@
   font-weight: bold;
 }
 
-#profile-icon {
-  width: 92%;
-  text-align: center;
-  margin: 4%;
+.profile-icon {
+  width: 92% !important;
+  text-align: center !important;
+  margin: 4% !important;
 }
 
 .right {
