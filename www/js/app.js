@@ -14,7 +14,7 @@ var app = angular.module('earthApp', [
 
 app.run(function($ionicPlatform,$rootScope,$state,$http) {
 
-    // When the user is going to another page!
+   // When the user is going to another page!
     $rootScope.$on('$stateChangeStart',function(event, toState, toParams, fromState, fromParams) {
         // redirect to mainPage if logged in
         if (window.localStorage['globals']) {
@@ -127,9 +127,13 @@ app.config(function($stateProvider, $urlRouterProvider) {
         })
 
         .state('app.profile', {
-            url:"/profile",
-            templateUrl:"templates/profile.html",
-            controller:"profileCtrl"
+            url: "/profile",
+            views: {
+                "menuContent" :{
+                    templateUrl: "templates/profile.html",
+                    controller:'profileCtrl'
+                }
+            }
         });
 
     // if none of the above states are matched, use this as the fallback

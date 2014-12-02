@@ -117,7 +117,7 @@ myEarthCtrl.controller('loginCtrl',
         Parse.User.requestPasswordReset(email, {
             success:function() {
                 $ionicPopup.alert({
-                    title: 'Email Sent Successfully',
+                    title: 'Email Sent Successfully'
                 });
             },
             error:function(error) {
