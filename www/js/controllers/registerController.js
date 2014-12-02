@@ -33,6 +33,7 @@ myEarthCtrl.controller('registerCtrl',
                 success: function(user) {
 
                     $ionicLoading.hide();
+                    $scope.closeSignUp();
                     console.log('signup successful');
                     $state.go('app.timeline');
 
@@ -41,6 +42,7 @@ myEarthCtrl.controller('registerCtrl',
                 error: function(user, error) {
 
                   $ionicLoading.hide();
+                  $scope.closeSignUp();
                   $ionicPopup.alert({
                     title: 'Error',
                     template: "<p>Error in account creation. Please try again.</p>",

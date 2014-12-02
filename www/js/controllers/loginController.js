@@ -50,92 +50,90 @@ myEarthCtrl.controller('loginCtrl',
 };
 
 
-        // ---------------------- Loading Modal ---------------------
-        $ionicModal.fromTemplateUrl('templates/register.html', function($ionicModal) {
+    // ---------------------- Loading Modal ---------------------
+    $ionicModal.fromTemplateUrl('templates/register.html', function($ionicModal) {
 
-            $scope.modal = $ionicModal;
-        }, {
-            // Use our scope for the scope of the modal to keep it simple
-            scope: $scope,
-            // The animation we want to use for the modal entrance
-            animation: 'slide-in-up'
+        $scope.modal = $ionicModal;
+    }, {
+        // Use our scope for the scope of the modal to keep it simple
+        scope: $scope,
+        // The animation we want to use for the modal entrance
+        animation: 'slide-in-up'
+    });
+
+    // ---------------------- Loading Forgot Modal ---------------------
+    $ionicModal.fromTemplateUrl('templates/forgot.html', function($ionicModal) {
+
+        $scope.forgotData = {};
+        $scope.forgotmodal = $ionicModal;
+    }, {
+        // Use our scope for the scope of the modal to keep it simple
+        scope: $scope,
+        // The animation we want to use for the modal entrance
+        animation: 'slide-in-up'
+    });
+
+
+
+    // ---------------------- close forgot Modal ---------------------
+    $scope.closeForgot = function () {
+        $scope.forgotmodal.hide();
+    }
+
+
+
+    $scope.checkUserInfoForNewPass = function () {
+
+        var email = $scope.forgotData.email;
+
+        var query = new Parse.Query(Parse.User);
+        query.equalTo("username", email);
+
+        console.log('parse request: check email to reset password');
+        query.find({
+          success: function(users) {
+
+                if (users.length > 0) {
+                    
+                    $scope.closeForgot();
+                    sendNewPasswordEmail(email);
+                
+                } else {
+                    
+                    $ionicPopup.alert({
+                        title: 'Error',
+                        template: "<p>Could not find user account.</p>",
+                        okText: 'OK'
+                    });
+                }
+
+            }
         });
+    }
 
-        // ---------------------- Loading Forgot Modal ---------------------
-        $ionicModal.fromTemplateUrl('templates/forgot.html', function($ionicModal) {
+    function sendNewPasswordEmail(email) {
 
-            $scope.forgotData = {};
-            $scope.forgotmodal = $ionicModal;
-        }, {
-            // Use our scope for the scope of the modal to keep it simple
-            scope: $scope,
-            // The animation we want to use for the modal entrance
-            animation: 'slide-in-up'
+        console.log('parse request: send password reset email');
+        Parse.User.requestPasswordReset(email, {
+            success:function() {
+                $ionicPopup.alert({
+                    title: 'Email Sent Successfully',
+                });
+            },
+            error:function(error) {
+                $ionicPopup.alert({
+                  title: error
+                  });
+            }
         });
+    } 
 
 
 
-        // ---------------------- close forgot Modal ---------------------
-        $scope.closeForgot = function () {
-            $scope.forgotmodal.hide();
-        }
 
+    // ---------------------- close Modal ---------------------
+    $scope.closeSignUp = function () {
+        $scope.modal.hide();
+    }
 
-
-$scope.checkUserInfoForNewPass = function () {
-
-    var email = $scope.forgotData.email;
-
-    var query = new Parse.Query(Parse.User);
-    query.equalTo("username", email);
-
-    console.log('parse request: check email to reset password');
-    query.find({
-      success: function(users) {
-
-        if (users.length > 0) {
-          $scope.closeForgot();
-          sendNewPasswordEmail(email);
-      }
-
-      else {
-          $ionicPopup.alert({
-            title: 'Error',
-            template: "<p>Could not find user account.</p>",
-            okText: 'OK'
-        });
-      }
-  }
 });
-
-    
-}
-
-function sendNewPasswordEmail(email) {
-
-    console.log('parse request: send password reset email');
-    Parse.User.requestPasswordReset(email, {
-        success:function() {
-            $ionicPopup.alert({
-                title: 'Email Sent Successfully',
-            });
-        },
-        error:function(error) {
-            $ionicPopup.alert({
-              title: error
-              });
-        }
-    });
-} 
-
-
-
-
-        // ---------------------- close Modal ---------------------
-        $scope.closeSignUp = function () {
-            $scope.modal.hide();
-        }
-
-
-
-    });

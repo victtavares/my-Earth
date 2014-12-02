@@ -5,7 +5,9 @@ var app = angular.module('earthApp', [
     'controllers.register',
     'controllers.main',
     'controllers.timeline',
-    'controllers.profile'
+    'controllers.impact',
+    'controllers.profile',
+    'controllers.selectToDo'
 ]);
 
 
@@ -100,6 +102,26 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 "menuContent" :{
                     templateUrl: "templates/timeline.html",
                     controller:'timelineCtrl'
+                }
+            }
+        })
+
+        .state('app.selectToDoList', {
+            url: "/selectToDoList",
+            views: {
+                "menuContent" :{
+                    templateUrl: "templates/selectToDoList.html",
+                    controller:'selectToDoCtrl'
+                }
+            }
+        })
+
+        .state('app.impact', {
+            url: "/impact",
+            views: {
+                "menuContent" :{
+                    templateUrl: "templates/impact.html",
+                    controller:'impactCtrl'
                 }
             }
         })

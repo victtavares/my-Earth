@@ -19,6 +19,17 @@
     background-color:#68d668 !important;
 }
 
+.login-button {
+
+  width: 68% !important;
+  margin-left: 16%;
+
+}
+
+.center {
+  text-align: center;
+}
+
 .content-bg {
     background: #FAFAFA;
 }

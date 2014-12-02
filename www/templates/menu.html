@@ -13,15 +13,26 @@
         </header>
         <ion-content class="has-header">
             <ion-list >
-                <ion-item nav-clear menu-close href="#/app/profile">
-                    Profile
-                </ion-item>
-                <ion-item nav-clear menu-close href="#/app/timeline">
+                <a class="item nav-clear menu-close item-icon-left menuTabs" nav-clear menu-close href="#/app/profile">
+                    <i class="icon ion-person"></i>
+                    My Profile
+                </a>
+                <a class="item nav-clear menu-close item-icon-left menuTabs" nav-clear menu-close href="#/app/impact">
+                    <i class="icon ion-earth"></i>
+                    My Impact
+                </a>
+                <a class="item nav-clear menu-close item-icon-left menuTabs" nav-clear menu-close href="#/app/timeline">
+                    <i class="icon ion-leaf"></i>
                     Activities
-                </ion-item>
-                <ion-item nav-clear menu-close href="#/" ng-click="logout()">
+                </a>
+                <a class="item nav-clear menu-close item-icon-left menuTabs" nav-clear menu-close href="#/app/selectToDoList">
+                    <i class="icon ion-clipboard"></i>
+                    Select To Do List
+                </a>
+                <a class="item nav-clear menu-close item-icon-left menuTabs" nav-clear menu-close href="#/" ng-click="logout()">
+                <i class="icon ion-log-out"></i>
                     Logout
-                </ion-item>
+                </a>
             </ion-list>
         </ion-content>
     </ion-side-menu>

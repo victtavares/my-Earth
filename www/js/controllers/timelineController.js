@@ -1,10 +1,15 @@
 var paradropCtrl = angular.module('controllers.timeline',[
-    'services.model.activities'
+    'services.model.activities',
+    'ionic.utils'
 ]);
 
 paradropCtrl.controller('timelineCtrl',
-    function($scope,$ionicModal, modelActivity, $state) {
+    function($scope,$ionicModal, modelActivity, $state, $localStorage) {
 
+
+        if ($localStorage.get('firstLogin')) {
+            $localStorage.set('firstLogin', false);
+        }
 
         // ---------------------- Loading Modal ---------------------
         $ionicModal.fromTemplateUrl('templates/addActivities.html', function($ionicModal) {
