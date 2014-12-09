@@ -5,10 +5,6 @@ var paradropCtrl = angular.module('controllers.timeline',[
 paradropCtrl.controller('timelineCtrl',
     function($scope,$ionicModal, $state, $localStorage, $ionicLoading, $ionicPopup) {
 
-        if ($localStorage.get('firstLogin')) {
-            $localStorage.set('firstLogin', false);
-        }
-
         // ---------------------- Loading Modal ---------------------
         $ionicModal.fromTemplateUrl('templates/addActivities.html', function($ionicModal) {
 
@@ -73,8 +69,6 @@ paradropCtrl.controller('timelineCtrl',
                 
                 // The connection failed. Check error to see why.
                 $ionicLoading.hide();
-
-                $state.go('logout');
 
                 $ionicPopup.alert({
                     title: 'Connection Failed',
@@ -194,23 +188,7 @@ paradropCtrl.controller('timelineCtrl',
                   title: "Couldn't Establish Connection.",
                   okText: 'OK'
                 });
-                $state.go('logout');
             });
-
-            // ({
-            //   success: function(user) {
-            //     $ionicLoading.hide();
-            //     $scope.modal.hide();
-            //   },
-            //   error: function(error) {
-            //     $ionicLoading.hide();
-            //     $ionicPopup.alert({
-            //       title: "Couldn't Establish Connection.",
-            //       okText: 'OK'
-            //     });
-            //     $state.go('logout');
-            //   }
-            // });
 
         }
 

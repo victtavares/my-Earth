@@ -34,7 +34,8 @@ paradropCtrl.controller('profileCtrl',
 		var options = {
 
 		    bezierCurve : false,
-		    animation: false
+		    animation: false,
+		    showTooltips: false,
 
 		};
 
