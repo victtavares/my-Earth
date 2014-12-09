@@ -1,6 +1,6 @@
 <ion-nav-bar class="bar-positive nav-title-slide-ios7 headerBG">
 </ion-nav-bar>
-<ion-view title="My Earth" hide-back-button="true" id="contentBG">
+<ion-view title="To Do List" hide-back-button="true" id="contentBG">
     <ion-nav-buttons side="left">
         <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
     </ion-nav-buttons>
@@ -8,12 +8,13 @@
         <button class="button button-icon icon ion-leaf balanced" ng-click="modal.show()"></button>
     </ion-nav-buttons>
     <ion-content class="has-header content-bg" ng-controller="timelineCtrl">
-        <div class="list card" ng-repeat="activity in activityList">
+        <div class="list card" ng-repeat="activity in todoList">
 
             <div class="item item-avatar">
-                <img src="/img/noimage.jpg">
+                <img src="/img/{{activity.pointCategory}}.png">
                 <h2 class="">{{activity.activityName}}</h2>
-                <p>{{activity.activityDescription}}</p>
+                <p>{{activity.description}}</p>
+                <p><b>{{activity.frequency}}</b></p>
             </div>
 
             <div class="item tabs tabs-secondary tabs-icon-left">
@@ -22,8 +23,12 @@
                     Share
                 </a>
                 <a class="tab-item" href="#">
-                    <i class="icon ion-forward"></i>
-                    Do again
+                    <i class="icon ion-gear-a"></i>
+                    Edit
+                </a>
+                <a class="tab-item" href="#">
+                    <i class="icon ion-trash-a"></i>
+                    Delete
                 </a>
             </div>
 

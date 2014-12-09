@@ -1,6 +1,4 @@
 var myEarthCtrl = angular.module('controllers.register',[
-    'services.auth',
-    'services.model.users'
 ]);
 
 
@@ -26,6 +24,7 @@ myEarthCtrl.controller('registerCtrl',
 
             user.set("username", $scope.registerData.username);
             user.set("password", $scope.registerData.password);
+            user.set('todoList', []);
 
             console.log('parse request: user signup');
 

@@ -2,9 +2,12 @@
 
     <!-- Modal header bar -->
     <ion-header-bar class="bar-positive headerBG nav-title-slide-ios7">
-        <h1 class="title">Activities</h1>
-        <button class="button button-clear button-light headerButton" ng-click="closeModalButton()">Cancel</button>
+    <button class="button button-clear button-light headerButton" ng-click="closeModalButton()">Cancel</button>
+        <h1 class="title">Add Activities</h1>
+        <button class="button button-clear button-light headerButton" ng-click="saveSelections()">Save</button>
     </ion-header-bar>
+
+    <ion-view>
 
     <!-- Modal content area -->
     <ion-content class="content-bg">
@@ -13,48 +16,52 @@
             <div class="item search item-input-inset"-->
                 <label class="item-input-wrapper" id="search-input">
                     <i class="icon ion-search placeholder-icon"></i>
-                    <input type="text" placeholder="Search Activities" ng-model="query" ng-change="search()">
+                    <input type="text" placeholder="Search Activities" ng-model="query">
                 </label>
             </div>
         </div>
 
-        <div class="list card" ng-repeat="activity in allActivitiesList">
+        <div class="item item-divider" ng-repeat="category in categoryList">
+            {{category.title}}
 
-            <div class="item item-avatar">
-                <img src="/img/noimage.jpg">
-                <h2>{{activity.activityName}}</h2>
-                <p>{{activity.points}}</p>
+            <div class="list card" ng-repeat="activity in category.activities | filter:query">
+
+                <div class="item item-avatar">
+                    <img src="/img/{{activity.pointCategory}}.png">
+                    <h2>{{activity.name}}</h2>
+                    <p>{{activity.points}} {{activity.pointCategory}} Points</p>
+                </div>
+
+                <div class="item item-body" style="padding-top: 0px">
+
+                    <h2>{{activity.description}}</h2>
+                    <!-- <p> How often do you perform this activity?</p> -->
+                    <label class="item item-input item-select">
+                        <div class="input-label">
+                            Frequency
+                        </div>
+                        <select ng-model = "activity.frequency">
+                            <option selected>Just Once</option>
+                            <option>Every Day</option>
+                            <option>Business Days</option>
+                            <option>Once a Week</option>
+                            <option>Once a Month</option>
+                        </select>
+                    </label>
+
+                </div>
+
+
+                <div class="item item-icon-left balanced" ng-click="addActivity(category.title, activity.name)">
+                    <i class="icon ion-happy"></i>
+                        Do it!
+                </div>
+
             </div>
 
-            <div class="item item-body">
-
-                <h2>{{activity.activityDescription}}</h2>
-                <p></p>
-                <p> How often do you do this activity?</p>
-                <label class="item item-input item-select">
-                    <div class="input-label">
-                        Frequency
-                    </div>
-                    <select ng-model = "addActivityData.frequency">
-                        <option selected>Just once</option>
-                        <option>Every Day</option>
-                        <option>Business Days</option>
-                        <option>Once a Week</option>
-                        <option>Once a Month</option>
-                    </select>
-                </label>
-
-            </div>
-
-
-
-
-            <div class="item item-icon-left balanced" ng-click="addActivity(activity.id)">
-                <i class="icon ion-happy"></i>
-                Do it!
-            </div>
-
-        </div>
+        <div>
     </ion-content>
+
+</ion-view>
 
 </div>

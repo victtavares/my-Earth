@@ -1,10 +1,8 @@
 var myEarthCtrl = angular.module('controllers.login',[
-    'services.auth',
-    'services.model.users'
     ]);
 
 myEarthCtrl.controller('loginCtrl',
-    function ($scope, $rootScope,$ionicPopup,$ionicLoading,$state, authentication, $ionicModal, modelUser) {
+    function ($scope, $rootScope,$ionicPopup,$ionicLoading,$state, $ionicModal) {
 
         // ---------------------- Login Function ---------------------
         $scope.login = function () {

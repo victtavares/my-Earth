@@ -1,9 +1,12 @@
-var paradropCtrl = angular.module('controllers.main',['services.auth']);
+var paradropCtrl = angular.module('controllers.main',[]);
 
 
 paradropCtrl.controller('mainCtrl',
-    function($scope, authentication) {
+    function($scope, $state) {
+
         $scope.logout = function () {
-            authentication.ClearCredentials();
+        	Parse.User.logOut();
+  			$state.go('login');
         }
+
     });

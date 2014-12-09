@@ -3,78 +3,195 @@ var paradropCtrl = angular.module('controllers.profile',[]);
 paradropCtrl.controller('profileCtrl',
 	function($scope,$ionicModal) {
 
-//		var data = {
-//			labels: ["January", "February", "March", "April", "May", "June", "July"],
-//			datasets: [
-//			{
-//				label: "Carbon Usage",
-//				fillColor: "rgba(130,255,180,0.2)",
-//				strokeColor: "rgba(130,255,180,1)",
-//				pointColor: "rgba(130,255,180,1)",
-//				pointStrokeColor: "#fff",
-//				pointHighlightFill: "#fff",
-//				pointHighlightStroke: "rgba(130,255,180,1)",
-//				data: [65, 59, 80, 81, 56, 55, 40]
-//			},
-//			{
-//				label: "Water Usage",
-//				fillColor: "rgba(151,187,255,0.2)",
-//				strokeColor: "rgba(151,187,255,1)",
-//				pointColor: "rgba(151,187,255,1)",
-//				pointStrokeColor: "#fff",
-//				pointHighlightFill: "#fff",
-//				pointHighlightStroke: "rgba(151,187,255,1)",
-//				data: [28, 48, 40, 19, 86, 27, 90]
-//			}
-//			]
-//		};
-//
-//		var options = {
-//
-//    //default options are commented out; uncomment and change to alter
-//
-//    // ///Boolean - Whether grid lines are shown across the chart
-//    // scaleShowGridLines : true,
-//
-//    // //String - Colour of the grid lines
-//    // scaleGridLineColor : "rgba(0,0,0,.05)",
-//
-//    // //Number - Width of the grid lines
-//    // scaleGridLineWidth : 1,
-//
-//    // //Boolean - Whether the line is curved between points
-//    // bezierCurve : true,
-//
-//    // //Number - Tension of the bezier curve between points
-//    // bezierCurveTension : 0.4,
-//
-//    // //Boolean - Whether to show a dot for each point
-//    // pointDot : true,
-//
-//    // //Number - Radius of each point dot in pixels
-//    // pointDotRadius : 4,
-//
-//    // //Number - Pixel width of point dot stroke
-//    // pointDotStrokeWidth : 1,
-//
-//    // //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-//    // pointHitDetectionRadius : 20,
-//
-//    // //Boolean - Whether to show a stroke for datasets
-//    // datasetStroke : true,
-//
-//    // //Number - Pixel width of dataset stroke
-//    // datasetStrokeWidth : 2,
-//
-//    // //Boolean - Whether to fill the dataset with a colour
-//    // datasetFill : true,
-//
-//    // //String - A legend template
-//    // legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
-//
-//};
-//
-//var ctx = document.getElementById("myChart").getContext("2d");
-//var myLineChart = new Chart(ctx).Line(data, options);
+		//bullshit data to initialize chart
+
+		var data = {
+		  labels: ["air", "water", "wind", "fire"],
+		  datasets: [
+		    {
+		      label: "Carbon Usage",
+		      fillColor: "rgba(130,255,180,0.2)",
+		      strokeColor: "rgba(130,255,180,1)",
+		      pointColor: "rgba(130,255,180,1)",
+		      pointStrokeColor: "#fff",
+		      pointHighlightFill: "#fff",
+		      pointHighlightStroke: "rgba(130,255,180,1)",
+		      data: [32, 46, 37, 85]
+		    },
+		    {
+		      label: "Water Usage",
+		      fillColor: "rgba(151,187,255,0.2)",
+		      strokeColor: "rgba(151,187,255,1)",
+		      pointColor: "rgba(151,187,255,1)",
+		      pointStrokeColor: "#fff",
+		      pointHighlightFill: "#fff",
+		      pointHighlightStroke: "rgba(151,187,255,1)",
+		      data: [46, 86, 85, 36]
+		    }
+		  ]
+		};
+
+		var options = {
+
+		    bezierCurve : false,
+		    animation: false
+
+		};
+
+	  	var ctx = document.getElementById("myChart").getContext("2d");
+	  	var myLineChart = new Chart(ctx).Line(data, options);
+
+	  	$scope.bestWeek = function() {
+
+		    //TODO: get best week from database
+
+		    console.log('bestWeek');
+
+		    var h2o = {mon: 32, tue: 56, wed: 63, thur: 80, fri: 24, sat: 33, sund: 42};
+		    var co2 = {mon: 43, tue: 63, wed: 34, thur: 72, fri: 76, sat: 47, sund: 50};
+
+		    myLineChart.addData([co2.mon, h2o.mon], "Monday"); 
+		    myLineChart.addData([co2.tue, h2o.tue], "Tuesday");
+		    myLineChart.addData([co2.wed, h2o.wed], "Wednesday");
+		    myLineChart.addData([co2.thur, h2o.thur], "Thursday");
+		    myLineChart.addData([co2.fri, h2o.fri], "Friday");
+		    myLineChart.addData([co2.sat, h2o.sat], "Saturday");
+		    myLineChart.addData([co2.sund, h2o.sund], "Sunday");
+
+		    removeOldData(7);
+
+		    myLineChart.update();
+
+	  	}
+
+	  	$scope.worstWeek = function() {
+
+		  //TODO: get worst week from database
+
+		  var h2o = {mon: 23, tue: 43, wed: 34, thur: 52, fri: 16, sat: 37, sund: 24};
+		  var co2 = {mon: 23, tue: 35, wed: 49, thur: 84, fri: 25, sat: 32, sund: 38};
+
+		  myLineChart.addData([co2.mon, h2o.mon], "Monday"); 
+		  myLineChart.addData([co2.tue, h2o.tue], "Tuesday");
+		  myLineChart.addData([co2.wed, h2o.wed], "Wednesday");
+		  myLineChart.addData([co2.thur, h2o.thur], "Thursday");
+		  myLineChart.addData([co2.fri, h2o.fri], "Friday");
+		  myLineChart.addData([co2.sat, h2o.sat], "Saturday");
+		  myLineChart.addData([co2.sund, h2o.sund], "Sunday");
+
+		  removeOldData(7);
+
+		  myLineChart.update();
+
+		}
+
+		$scope.allTime = function() {
+
+		  //TODO: get all time data from database
+
+		  var h2o = [322, 525, 646, 753];
+		  var co2 = [453, 444, 364, 243];
+
+		  var startMonth = 8;
+		  var numNewDataPoints = h2o.length;
+		  var thisMonth = startMonth;
+		  var monthTitle = "";
+
+		  for (var i = 0; i < h2o.length; i++) {
+
+		    monthTitle = getMonthTitle(thisMonth);
+
+		    myLineChart.addData([co2[i], h2o[i]], monthTitle);
+
+		    if (thisMonth != 12) {
+		      thisMonth++;
+		    } else {
+		      thisMonth = 1;
+		    }
+
+		  }
+
+		  removeOldData(numNewDataPoints);
+
+		  myLineChart.update();
+
+		}
+
+		$scope.thisWeek = function() {
+
+		  //TODO: get current week from database
+
+		  var h2o = {mon: 30, tue: 50, wed: 32, thur: 47, fri: null, sat: null, sund: null};
+		  var co2 = {mon: 23, tue: 43, wed: 34, thur: 58, fri: null, sat: null, sund: null};
+
+		  var numNewDataPoints = 0;
+
+		  if (co2.mon != null) {
+		    myLineChart.addData([co2.mon, h2o.mon], "Monday"); 
+		    numNewDataPoints++;
+		  }
+		  if (co2.tue != null) {
+		    myLineChart.addData([co2.tue, h2o.tue], "Tuesday");
+		    numNewDataPoints++;
+		  }
+		  if (co2.wed != null) {
+		    myLineChart.addData([co2.wed, h2o.wed], "Wednesday");
+		    numNewDataPoints++;
+		  }
+		  if (co2.thur != null) {
+		    myLineChart.addData([co2.thur, h2o.thur], "Thursday");
+		    numNewDataPoints++;
+		  }
+		  if (co2.fri != null) {
+		    myLineChart.addData([co2.fri, h2o.fri], "Friday");
+		    numNewDataPoints++;
+		  }
+		  if (co2.sat != null) {
+		    myLineChart.addData([co2.sat, h2o.sat], "Saturday");
+		    numNewDataPoints++;
+		  }
+		  if (co2.sund != null) {
+		    myLineChart.addData([co2.sund, h2o.sund], "Sunday");
+		    numNewDataPoints++;
+		  }
+
+		  removeOldData(numNewDataPoints);
+
+		  myLineChart.update();
+
+		}
+
+		var removeOldData = function(numNewDataPoints) {
+
+		  var numPoints = myLineChart.datasets[0].points.length;
+
+		  for (var i = 0; i < numPoints - numNewDataPoints; i++) {
+
+		    myLineChart.removeData();
+
+		  }
+
+		}
+
+		var getMonthTitle = function(thisMonth) {
+
+		  switch(thisMonth) {
+		    case 1: return "January";
+		    case 2: return "February";
+		    case 3: return "March";
+		    case 4: return "April";
+		    case 5: return "May";
+		    case 6: return "June";
+		    case 7: return "July";
+		    case 8: return "August";
+		    case 9: return "September";
+		    case 10: return "October";
+		    case 11: return "November";
+		    case 12: return "December";
+		  }
+
+		}
+
+		$scope.allTime();
 
 });
