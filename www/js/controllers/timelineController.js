@@ -3,7 +3,7 @@ var paradropCtrl = angular.module('controllers.timeline',[
 ]);
 
 paradropCtrl.controller('timelineCtrl',
-    function($scope,$ionicModal, $state, $localStorage, $ionicLoading) {
+    function($scope,$ionicModal, $state, $localStorage, $ionicLoading, $ionicPopup) {
 
         if ($localStorage.get('firstLogin')) {
             $localStorage.set('firstLogin', false);
@@ -136,28 +136,56 @@ paradropCtrl.controller('timelineCtrl',
 
             var todoList = user.get('todoList');
 
+            var itemAdded = false;
+
             for (var i = 0; i < $scope.pendingActivities.length; i++) {
                 
                 //add activities to user profile. save to parse
                 if (!listContainsActivity(todoList, $scope.pendingActivities[i].name)) {
 
+                    itemAdded = true;
+
                     console.log('add ' + $scope.pendingActivities[i]);
                     todoList.push($scope.pendingActivities[i]);
+
+                } else {
+
+                    for (var j = 0; j < todoList.length; j++) {
+                
+                        console.log(todoList);
+                        console.log($scope.pendingActivities);
+
+                        if (todoList[j].name == $scope.pendingActivities[i].name) {
+                            if (todoList[j].freq != $scope.pendingActivities[i].freq){
+                                todoList[j] = $scope.pendingActivities[i];
+                                itemAdded = true;
+                            }
+                        }
+
+                    }
 
                 }
             }
 
             console.log("parse request: save todo list");
 
+            if(!itemAdded) {
+                console.log('no new item added to todoList');
+                $ionicLoading.hide();
+                $scope.modal.hide();
+                return;
+            }
+
+            console.log('todoList: ');
+            console.log(todoList);
+
             user.set('todoList', todoList);
 
             user.save().then(function(obj) {
-              // the object was saved successfully.
-              $scope.todoList = generateToDoList();
+                // the object was saved successfully.
+                $scope.todoList = generateToDoList();
 
-              $scope.$apply();
-
-              $ionicLoading.hide();
+                $ionicLoading.hide();
                 $scope.modal.hide();
             }, function(error) {
               // the save failed.
