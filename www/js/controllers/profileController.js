@@ -5,6 +5,14 @@ paradropCtrl.controller('profileCtrl',
 
 		//bullshit data to initialize chart
 
+		var overallPoundsCarbonSaved = 1500;
+		var treesPerPoundOfCarbon = 2.9;
+
+		var galsOfWaterSaved = 345;
+
+		$scope.treesSaved = Math.round(overallPoundsCarbonSaved * treesPerPoundOfCarbon);
+		$scope.waterSaved = Math.round(galsOfWaterSaved);
+
 		var data = {
 		  labels: ["air", "water", "wind", "fire"],
 		  datasets: [
