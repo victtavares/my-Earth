@@ -104,22 +104,40 @@ paradropCtrl.controller('timelineCtrl',
                     for (var j = 0; j < $scope.categoryList.length; j++) {
                         category = $scope.categoryList[j];
                         if (category.title === activity.activityCategory) {
-                            category.activities.push({name: activity.activityName, points: activity.points, pointCategory: activity.pointCategory, description: activity.description, added: false, addedPhrase: ""});
+
+                            var pointCategoryIcon = "leaf";
+                            var colorClass = "green-color";
+
+                            if (activity.pointCategory == "Gallons of Water"){
+                                pointCategoryIcon = "waterdrop";
+                                colorClass = "blue-color";
+                            }
+
+                            category.activities.push({name: activity.activityName, points: activity.points, pointCategory: activity.pointCategory, description: activity.description, added: false, addedPhrase: "Add Activity", icon: pointCategoryIcon, colorClass: colorClass});
                             console.log("Update category: " + activity.activityCategory + ", activity: " + activity.activityName);
                             break;
                         }
                     }
 
                 } else {
+
+                    var pointCategoryIcon = "leaf";
+                    var colorClass = "green-color";
+
+                    if (activity.pointCategory == "Gallons of Water"){
+                        pointCategoryIcon = "waterdrop";
+                        colorClass = "blue-color";
+                    }
+
                     console.log("Add category: " + activity.activityCategory + ", activity: " + activity.activityName);
-                    $scope.categoryList.push({title: activity.activityCategory, activities: [{name: activity.activityName, points: activity.points, pointCategory: activity.pointCategory, description: activity.description, added: false, addedPhrase: ""}]});
+                    $scope.categoryList.push({title: activity.activityCategory, activities: [{name: activity.activityName, points: activity.points, pointCategory: activity.pointCategory, description: activity.description, added: false, addedPhrase: "Add Activity", icon: pointCategoryIcon, colorClass: colorClass}]});
                 }
 
             }
         }
 
-        //returns true if this category exists in the list
 
+        //returns true if this category exists in the list
         function isInCategoryList(categoryName) {
 
             for (var i = 0; i < $scope.categoryList.length; i++) {
@@ -129,6 +147,7 @@ paradropCtrl.controller('timelineCtrl',
             }
             return false;
         }
+
 
 
         $scope.saveSelections = function() {
@@ -160,10 +179,10 @@ paradropCtrl.controller('timelineCtrl',
                         console.log($scope.pendingActivities);
 
                         if (todoList[j].name == $scope.pendingActivities[i].name) {
-                            if (todoList[j].freq != $scope.pendingActivities[i].freq){
+                            // if (todoList[j].freq != $scope.pendingActivities[i].freq){
                                 todoList[j] = $scope.pendingActivities[i];
                                 itemAdded = true;
-                            }
+                            // }
                         }
 
                     }
@@ -231,7 +250,7 @@ paradropCtrl.controller('timelineCtrl',
                 return;
             }
 
-            var frequency;
+            // var frequency;
 
             for (var i = 0; i < $scope.categoryList.length; i++) {
                 if ($scope.categoryList[i].title == categoryName) {
@@ -245,19 +264,71 @@ paradropCtrl.controller('timelineCtrl',
                         else {act.addedPhrase='Add Activity'};
 
                         if (act.name == activityName && act.added) {
-                            frequency = $scope.categoryList[i].activities[j].frequency;
+                            // frequency = $scope.categoryList[i].activities[j].frequency;
                         }
                     }
 
                 }
             }
 
-            if (frequency == null) {
-                frequency = "Just Once";
+            // if (frequency == null) {
+            //     frequency = "Just Once";
+            // }
+
+            $scope.pendingActivities.push( {name: activityName} );
+            console.log($scope.pendingActivities);
+
+        }
+
+        $scope.deleteActivity = function(activityName) {
+
+            console.log("deleteActivity " + activityName);
+
+            $ionicLoading.show({
+                template: 'Loading...'
+            });
+
+
+            var user = Parse.User.current();
+            var userTodoList = user.get('todoList');
+
+            console.log(userTodoList);
+
+            var todoList = [];
+            var activities = $scope.allActivityList;
+
+            for (var i = 0; i < userTodoList.length; i++){
+                if (userTodoList[i].name == activityName) {
+
+                    userTodoList.splice(i, 1);
+
+                }
             }
 
-            $scope.pendingActivities.push( {name: activityName, freq: frequency } );
-            console.log($scope.pendingActivities);
+
+            console.log("parse request: save new todo list");
+
+            console.log('todoList: ');
+            console.log(userTodoList);
+            user.set('todoList', userTodoList);
+
+            user.save().then(function(obj) {
+                // the object was saved successfully.
+                $scope.todoList = generateToDoList();
+                console.log("generate to do List:" + generateToDoList());
+                $ionicLoading.hide();
+                $scope.modal.hide();
+                $state.go($state.current, {}, {reload: true});
+            }, function(error) {
+              // the save failed.
+              $ionicLoading.hide();
+                $ionicPopup.alert({
+                  title: "Couldn't Establish Connection.",
+                  okText: 'OK'
+                });
+            });
+
+
 
         }
 
@@ -281,7 +352,8 @@ paradropCtrl.controller('timelineCtrl',
 
                         var thisAct = activities[j];
                         thisAct.added = true;
-                        thisAct.frequency = userTodoList[i].freq;
+                        thisAct.addedPhrase = 'Added!';
+                        // thisAct.frequency = userTodoList[i].freq;
                         todoList.push(thisAct);
 
                     }

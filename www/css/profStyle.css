@@ -3,12 +3,18 @@
 
 .profile-icon-water {
   font-size: 72px;
-  color : blue;
 }
 
 .profile-icon-leaf {
   font-size: 72px;
-  color : green;
+}
+
+.green-color {
+    color:#68d668;
+}
+
+.blue-color {
+    color: #3399ee;
 }
 
 .profile-section {

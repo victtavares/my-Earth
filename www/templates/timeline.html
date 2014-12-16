@@ -1,20 +1,21 @@
 <ion-nav-bar class="bar-positive nav-title-slide-ios7 headerBG">
 </ion-nav-bar>
-<ion-view title="Activities" hide-back-button="true" id="contentBG">
+<ion-view title="My Activities" hide-back-button="true" id="contentBG">
     <ion-nav-buttons side="left">
         <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
     </ion-nav-buttons>
     <ion-nav-buttons side="right">
         <button class="button button-icon icon ion-earth balanced" ng-click="modal.show()"></button>
     </ion-nav-buttons>
-    <ion-content class="has-header content-bg">
+
+    <ion-content class="has-header content-bg" has-bouncing="true">
         <div class="list card" ng-repeat="activity in todoList">
 
             <div class="item item-avatar">
-                <img src="/img/{{activity.pointCategory}}.png">
+                <img src="img/{{activity.pointCategory}}.png"/>
                 <h2 class="">{{activity.activityName}}</h2>
                 <p>{{activity.description}}</p>
-                <p><b>{{activity.frequency}}</b></p>
+                <!-- <p><b>{{activity.frequency}}</b></p> -->
             </div>
 
             <div class="item tabs tabs-secondary tabs-icon-left">
@@ -22,11 +23,7 @@
                     <i class="icon ion-share"></i>
                     Share
                 </a>
-                <a class="tab-item" href="#">
-                    <i class="icon ion-gear-a"></i>
-                    Edit
-                </a>
-                <a class="tab-item" href="#">
+                <a class="tab-item" ng-click="deleteActivity(activity.activityName)">
                     <i class="icon ion-trash-a"></i>
                     Delete
                 </a>
@@ -34,6 +31,6 @@
 
         </div>
 
-
     </ion-content>
+
 </ion-view>

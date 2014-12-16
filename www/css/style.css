@@ -19,6 +19,14 @@
     background-color:#68d668 !important;
 }
 
+.green-color {
+    color:#68d668;
+}
+
+.blue-color {
+    color: #3399ee;
+}
+
 .login-button {
 
   width: 68% !important;

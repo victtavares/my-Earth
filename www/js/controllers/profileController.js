@@ -57,12 +57,12 @@ paradropCtrl.controller('profileCtrl',
 
 	  	$scope.bestWeek = function() {
 
-		    //TODO: get best week from database
-
 		    console.log('bestWeek');
 
+		    //TODO: Get these values
 		    var h2o = {mon: 32, tue: 56, wed: 63, thur: 80, fri: 24, sat: 33, sund: 42};
 		    var co2 = {mon: 43, tue: 63, wed: 34, thur: 72, fri: 76, sat: 47, sund: 50};
+
 
 		    myLineChart.addData([co2.mon, h2o.mon], "Monday"); 
 		    myLineChart.addData([co2.tue, h2o.tue], "Tuesday");
@@ -80,8 +80,8 @@ paradropCtrl.controller('profileCtrl',
 
 	  	$scope.worstWeek = function() {
 
-		  //TODO: get worst week from database
 
+	  		//TODO: Get these values
 		  var h2o = {mon: 23, tue: 43, wed: 34, thur: 52, fri: 16, sat: 37, sund: 24};
 		  var co2 = {mon: 23, tue: 35, wed: 49, thur: 84, fri: 25, sat: 32, sund: 38};
 
@@ -101,8 +101,8 @@ paradropCtrl.controller('profileCtrl',
 
 		$scope.allTime = function() {
 
-		  //TODO: get all time data from database
 
+			//TODO: Get these values
 		  var h2o = [322, 525, 646, 753];
 		  var co2 = [453, 444, 364, 243];
 
@@ -133,8 +133,8 @@ paradropCtrl.controller('profileCtrl',
 
 		$scope.thisWeek = function() {
 
-		  //TODO: get current week from database
 
+			//TODO: Get these values
 		  var h2o = {mon: 30, tue: 50, wed: 32, thur: 47, fri: null, sat: null, sund: null};
 		  var co2 = {mon: 23, tue: 43, wed: 34, thur: 58, fri: null, sat: null, sund: null};
 

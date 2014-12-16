@@ -10,7 +10,7 @@
     <ion-view>
 
     <!-- Modal content area -->
-    <ion-content class="content-bg">
+    <ion-content class="content-bg" has-bouncing="true">
 
         <div id="search-bar">
             <div class="item search item-input-inset"-->
@@ -24,10 +24,10 @@
         <div class="item item-divider" ng-repeat="category in categoryList">
             {{category.title}}
 
-            <div class="list card" ng-repeat="activity in category.activities | filter:query">
+            <div class="list card" ng-repeat="activity in category.activities | filter:query ">
 
                 <div class="item item-avatar">
-                    <img src="/img/{{activity.pointCategory}}.png">
+                    <img src="img/{{activity.pointCategory}}.png">
                     <h2>{{activity.name}}</h2>
                     <p>{{activity.points}} {{activity.pointCategory}}</p>
                 </div>
@@ -36,9 +36,9 @@
 
                     <h2>{{activity.description}}</h2>
                     <!-- <p> How often do you perform this activity?</p> -->
-                    <label class="item item-input item-select">
+                    <!-- <label class="item item-input item-select">
                         <div class="input-label">
-                            Frequency
+                            Freq
                         </div>
                         <select ng-model = "activity.frequency">
                             <option selected>Just Once</option>
@@ -47,14 +47,14 @@
                             <option>Once a Week</option>
                             <option>Once a Month</option>
                         </select>
-                    </label>
+                    </label> -->
 
                 </div>
 
 
-                <div class="item item-icon-left balanced" ng-click=" 
-                    activity.added = !activity.added; addActivity(category.title, activity.name);">
-                    <i class="icon ion-happy"></i>
+                <div class="item item-icon-left {{activity.colorClass}}" ng-click=" 
+                    activity.added = true; addActivity(category.title, activity.name);">
+                    <i class="icon ion-{{activity.icon}}"></i>
                         {{activity.addedPhrase}}
                 </div>
 
