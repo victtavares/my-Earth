@@ -4,6 +4,9 @@ paradropCtrl.controller('impactCtrl',
     function($scope, $state) {
 
     	var lbsCarbonSavedThisWeek = 168;
+            //TODO: Create service for this.
+
+
     	var conversionMultiplier = .04088161;
     	var secondaryMultiplier = .559159;
 

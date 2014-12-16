@@ -5,6 +5,15 @@ var paradropCtrl = angular.module('controllers.timeline',[
 paradropCtrl.controller('timelineCtrl',
     function($scope,$ionicModal, $state, $localStorage, $ionicLoading, $ionicPopup) {
 
+
+
+        //basics
+
+        $scope.activityAddedPhrase = "Added!";
+        $scope.activityNotAddedPhrase = "Add Activity";
+
+
+
         // ---------------------- Loading Modal ---------------------
         $ionicModal.fromTemplateUrl('templates/addActivities.html', function($ionicModal) {
 
@@ -84,6 +93,8 @@ paradropCtrl.controller('timelineCtrl',
         //generates $scope.categoryList from list of activities
         function generateCategoryList(activList) {
 
+            console.log("generateCategoryList");
+
             for (var i = 0; i < activList.length; i++) {
 
                 var activity = activList[i];
@@ -93,7 +104,7 @@ paradropCtrl.controller('timelineCtrl',
                     for (var j = 0; j < $scope.categoryList.length; j++) {
                         category = $scope.categoryList[j];
                         if (category.title === activity.activityCategory) {
-                            category.activities.push({name: activity.activityName, points: activity.points, pointCategory: activity.pointCategory, description: activity.description});
+                            category.activities.push({name: activity.activityName, points: activity.points, pointCategory: activity.pointCategory, description: activity.description, added: false, addedPhrase: ""});
                             console.log("Update category: " + activity.activityCategory + ", activity: " + activity.activityName);
                             break;
                         }
@@ -101,7 +112,7 @@ paradropCtrl.controller('timelineCtrl',
 
                 } else {
                     console.log("Add category: " + activity.activityCategory + ", activity: " + activity.activityName);
-                    $scope.categoryList.push({title: activity.activityCategory, activities: [{name: activity.activityName, points: activity.points, pointCategory: activity.pointCategory, description: activity.description}]});
+                    $scope.categoryList.push({title: activity.activityCategory, activities: [{name: activity.activityName, points: activity.points, pointCategory: activity.pointCategory, description: activity.description, added: false, addedPhrase: ""}]});
                 }
 
             }
@@ -122,14 +133,14 @@ paradropCtrl.controller('timelineCtrl',
 
         $scope.saveSelections = function() {
 
+            console.log("saveSelections");
+
             $ionicLoading.show({
                 template: 'Loading...'
             });
 
             var user = Parse.User.current();
-
             var todoList = user.get('todoList');
-
             var itemAdded = false;
 
             for (var i = 0; i < $scope.pendingActivities.length; i++) {
@@ -138,7 +149,6 @@ paradropCtrl.controller('timelineCtrl',
                 if (!listContainsActivity(todoList, $scope.pendingActivities[i].name)) {
 
                     itemAdded = true;
-
                     console.log('add ' + $scope.pendingActivities[i]);
                     todoList.push($scope.pendingActivities[i]);
 
@@ -172,15 +182,15 @@ paradropCtrl.controller('timelineCtrl',
 
             console.log('todoList: ');
             console.log(todoList);
-
             user.set('todoList', todoList);
 
             user.save().then(function(obj) {
                 // the object was saved successfully.
                 $scope.todoList = generateToDoList();
-
+                console.log("generate to do List:" + generateToDoList());
                 $ionicLoading.hide();
                 $scope.modal.hide();
+                $state.go($state.current, {}, {reload: true});
             }, function(error) {
               // the save failed.
               $ionicLoading.hide();
@@ -212,6 +222,8 @@ paradropCtrl.controller('timelineCtrl',
 
         $scope.addActivity = function(categoryName, activityName) {
 
+            console.log("addActivity " + activityName + " to " + categoryName);
+
             if (listContainsActivity($scope.pendingActivities, activityName)){
                 //do not allow duplicates
 
@@ -225,7 +237,14 @@ paradropCtrl.controller('timelineCtrl',
                 if ($scope.categoryList[i].title == categoryName) {
                     
                     for (var j = 0; j < $scope.categoryList[i].activities.length; j++) {
-                        if ($scope.categoryList[i].activities[j].name == activityName) {
+
+                        var act = $scope.categoryList[i].activities[j];
+
+                        if (act.added)
+                            {act.addedPhrase = 'Added!'} 
+                        else {act.addedPhrase='Add Activity'};
+
+                        if (act.name == activityName && act.added) {
                             frequency = $scope.categoryList[i].activities[j].frequency;
                         }
                     }
@@ -245,8 +264,9 @@ paradropCtrl.controller('timelineCtrl',
 
         function generateToDoList() {
 
-            var user = Parse.User.current();
+            console.log("generateToDoList");
 
+            var user = Parse.User.current();
             var userTodoList = user.get('todoList');
 
             console.log(userTodoList);
@@ -260,6 +280,7 @@ paradropCtrl.controller('timelineCtrl',
                     if (userTodoList[i].name == activities[j].activityName) {
 
                         var thisAct = activities[j];
+                        thisAct.added = true;
                         thisAct.frequency = userTodoList[i].freq;
                         todoList.push(thisAct);
 

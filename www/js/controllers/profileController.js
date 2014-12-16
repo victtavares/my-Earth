@@ -5,10 +5,15 @@ paradropCtrl.controller('profileCtrl',
 
 		//bullshit data to initialize chart
 		//activityModel.getLoggedUserToDoList();
+
 		var overallPoundsCarbonSaved = 1500;
+			//TODO: Create service for this.
+
+
 		var treesPerPoundOfCarbon = 2.9;
 
 		var galsOfWaterSaved = 345;
+		 	//TODO: Create service for this.
 
 		$scope.treesSaved = Math.round(overallPoundsCarbonSaved * treesPerPoundOfCarbon);
 		$scope.waterSaved = Math.round(galsOfWaterSaved);

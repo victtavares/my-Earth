@@ -52,9 +52,10 @@
                 </div>
 
 
-                <div class="item item-icon-left balanced" ng-click="addActivity(category.title, activity.name)">
+                <div class="item item-icon-left balanced" ng-click=" 
+                    activity.added = !activity.added; addActivity(category.title, activity.name);">
                     <i class="icon ion-happy"></i>
-                        Do it!
+                        {{activity.addedPhrase}}
                 </div>
 
             </div>
