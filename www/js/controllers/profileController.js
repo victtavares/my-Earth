@@ -1,10 +1,10 @@
-var paradropCtrl = angular.module('controllers.profile',[]);
+var paradropCtrl = angular.module('controllers.profile',['services.activityModel']);
 
 paradropCtrl.controller('profileCtrl',
-	function($scope,$ionicModal) {
+	function($scope,$ionicModal,activityModel) {
 
 		//bullshit data to initialize chart
-
+		//activityModel.getLoggedUserToDoList();
 		var overallPoundsCarbonSaved = 1500;
 		var treesPerPoundOfCarbon = 2.9;
 
@@ -43,7 +43,7 @@ paradropCtrl.controller('profileCtrl',
 
 		    bezierCurve : false,
 		    animation: false,
-		    showTooltips: false,
+		    showTooltips: false
 
 		};
 
