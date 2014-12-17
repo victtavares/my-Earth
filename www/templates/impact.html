@@ -11,7 +11,14 @@
     <h2 style="text-align: center; margin-top: 12px">Level {{tier}}</h2>
     
     <img src="img/polarBear{{tier}}.jpeg" style="width: 86%; margin-left: 7%"></img>
-    <h3 style="text-align: center; width: 86%; margin-left: 7%; margin-top: 4px; color: gray" > {{carbonSaved}} Pounds of Carbon</h3>
+
+    
+    <h3 style="text-align: center; width: 86%; margin-left: 7%; margin-top: 12px; color: gray" > {{carbonSaved}} lbs. of Carbon</h3>
+
+<div>
+        <progress value="{{percentDone}}" max="100" style="width: 75%"></progress>
+    </div>
+
     <h4 style="text-align: center; width: 86%; margin-left: 7%" >{{progressToNextLevel}}</h4>
 
     </ion-content>

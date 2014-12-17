@@ -10,7 +10,6 @@ var app = angular.module('earthApp', [
 ]);
 
 
-
 app.run(function($ionicPlatform,$rootScope,$state,$http) {
 
    // When the user is going to another page!

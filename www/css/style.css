@@ -93,5 +93,21 @@
 
   max-width: "80%";
 
-
 }
+
+
+#progress {
+ width: 500px;   
+ border: 1px solid black;
+ position: relative;
+ padding: 3px;
+}
+
+#bar {
+ height: 20px;
+}
+
+#textIfNoItems {
+  display: none;
+}
+

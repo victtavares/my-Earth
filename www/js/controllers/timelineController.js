@@ -361,6 +361,13 @@ paradropCtrl.controller('timelineCtrl',
                 }
             }
 
+            if (todoList.length == 0) {
+
+                console.log('no items in todoList');
+                document.getElementById('textIfNoItems').style.display = 'block';
+
+            }
+
             return todoList;
 
         }
