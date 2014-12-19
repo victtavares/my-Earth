@@ -373,5 +373,16 @@ paradropCtrl.controller('timelineCtrl',
         }
 
 
+        $scope.alertPoints = function(points, category) {
+
+            $ionicPopup.alert({
+                    title: 'Good Work!',
+                    template: points + ' ' + category + ' saved',
+                    okText: 'OK'
+                });
+
+        }
+
+
 
     });
