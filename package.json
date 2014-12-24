@@ -1,7 +1,7 @@
 {
-  "name": "myearthapp",
+  "name": "myearth",
   "version": "1.0.0",
-  "description": "myEarthApp: An Ionic project",
+  "description": "myEarth: An Ionic project",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-sass": "^0.7.1",

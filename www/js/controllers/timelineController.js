@@ -1,9 +1,10 @@
 var paradropCtrl = angular.module('controllers.timeline',[
-    'ionic.utils'
+    'ionic.utils',
+    'services.activityModel'
 ]);
 
 paradropCtrl.controller('timelineCtrl',
-    function($scope,$ionicModal, $state, $localStorage, $ionicLoading, $ionicPopup) {
+    function($scope,$ionicModal, $state, $localStorage, $ionicLoading, $ionicPopup, activityModel) {
 
 
 
@@ -34,7 +35,7 @@ paradropCtrl.controller('timelineCtrl',
         $ionicLoading.show({
             template: 'Loading...'
         });
-
+        
 
         //Get Activity List from Parse, group by activity Category
 
@@ -380,6 +381,45 @@ paradropCtrl.controller('timelineCtrl',
                     template: points + ' ' + category + ' saved',
                     okText: 'OK'
                 });
+
+        }
+
+
+
+
+
+        //Do activity
+        //TODO: change from name to the real activity
+        $scope.doActivity  = function (activityName) {
+            $ionicLoading.show({
+                template: 'Loading...'
+            });
+            console.log("---- Do activity ------")
+            // Getting the activity from Parse
+            var promise = activityModel.getUniqueActivityByName(activityName);
+
+            //If we get the activity with the activity Name
+            promise.then(function (activity) {
+                //Do that activity
+                var promise2 = activityModel.doActivity(activity);
+                promise2.then(function (message) {
+                    console.log(activity);
+                    $ionicPopup.alert({
+                        title: "Great! You just saved " + activity.points + " trees",
+                        okText: 'OK'
+                    });
+                    $ionicLoading.hide();
+                }, function (error) {
+                    $ionicPopup.alert({
+                        title: error,
+                        okText: 'OK'
+                    });
+                    $ionicLoading.hide();
+                });
+
+            }, function (message) {
+                console.log("Error Message: " + message);
+            })
 
         }
 
