@@ -6,16 +6,31 @@ myEarthService.factory('activityModel', function($q) {
 
 
 
-    service.getLoggedUserActivityList = function() {
 
-        if (Parse.User) {
-            var user = Parse.User.current();
-            userTodoList = user.get('todoList');
-            console.log(userTodoList);
-            return userTodoList;
-        } else {
-            return null;
+    service.getUserActivityDoneList = function() {
+        var user = Parse.User.current();
+        var activity_user = Parse.Object.extend("ActivityDone_user");
+        var deferred  = $q.defer();
+
+        var onSuccess, onError;
+        onSuccess = function (results) {
+            deferred.resolve(results);
         }
+
+        onError = function (error) {
+            deferred.reject("Error: " + error);
+        }
+        var query = new Parse.Query(activity_user);
+        query.equalTo("user",user);
+        query.ascending("createdAt");
+        query.include("activity");
+        query.find({
+            success: onSuccess,
+            error: onError
+        });
+
+        return deferred.promise;
+
     }
 
 

@@ -15,6 +15,8 @@ paradropCtrl.controller('timelineCtrl',
 
 
 
+
+
         // ---------------------- Loading Modal ---------------------
         $ionicModal.fromTemplateUrl('templates/addActivities.html', function($ionicModal) {
 
@@ -374,26 +376,24 @@ paradropCtrl.controller('timelineCtrl',
         }
 
 
-        $scope.alertPoints = function(points, category) {
-
-            $ionicPopup.alert({
-                    title: 'Good Work!',
-                    template: points + ' ' + category + ' saved',
-                    okText: 'OK'
-                });
-
-        }
-
-
-
+        //$scope.alertPoints = function(points, category) {
+        //
+        //    $ionicPopup.alert({
+        //            title: 'Good Work!',
+        //            template: points + ' ' + category + ' saved',
+        //            okText: 'OK'
+        //        });
+        //
+        //}
 
 
         //Do activity
         //TODO: change from name to the real activity
-        $scope.doActivity  = function (activityName) {
+        $scope.doActivity  = function (activityName, category) {
             $ionicLoading.show({
                 template: 'Loading...'
             });
+
             console.log("---- Do activity ------")
             // Getting the activity from Parse
             var promise = activityModel.getUniqueActivityByName(activityName);
@@ -401,11 +401,13 @@ paradropCtrl.controller('timelineCtrl',
             //If we get the activity with the activity Name
             promise.then(function (activity) {
                 //Do that activity
+                console.log(activity);
                 var promise2 = activityModel.doActivity(activity);
                 promise2.then(function (message) {
                     console.log(activity);
                     $ionicPopup.alert({
-                        title: "Great! You just saved " + activity.points + " trees",
+                        title: 'Good Work!',
+                        template: activity.get("points") + ' ' + category + ' saved',
                         okText: 'OK'
                     });
                     $ionicLoading.hide();

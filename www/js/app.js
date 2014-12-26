@@ -7,6 +7,7 @@ var app = angular.module('earthApp', [
     'controllers.timeline',
     'controllers.impact',
     'controllers.profile',
+    'services.activityModel'
 ]);
 
 
@@ -117,9 +118,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
         .state('app.profile', {
             url: "/profile",
             views: {
-                "menuContent" :{
+                "menuContent": {
                     templateUrl: "templates/profile.html",
-                    controller:'profileCtrl'
+                    controller: 'profileCtrl'
+                }
+            },
+            resolve: {
+                activityDoneList: function(activityModel) {
+                    return activityModel.getUserActivityDoneList();
                 }
             }
         });
