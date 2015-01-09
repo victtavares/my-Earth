@@ -6,31 +6,34 @@
   </ion-nav-buttons>
   <ion-content class="has-header content-bg"  has-bouncing="true">
 
+    <div> <h4 id="textIfNoItems" class="center" style="color: gray; width: 70%; margin: 15%; margin-top: 60%">You didn't perfom any activities!</br> Go to  the Activities page to add or perform activities.</h4></div>
+
 
 <!-- Overall Consumption -->
-<div>
-  <ion-slide-box show-pager="false" auto-play="true" does-continue="true" slide-interval="4000">
+<div ng-show="showData">
+  <div>
+    <ion-slide-box show-pager="false" auto-play="true" does-continue="true" slide-interval="4000">
+    <ion-slide>
+    <div class="profile-icon">
+      <i class="icon ion-leaf profile-icon-leaf green-color"></i>
+    </div>
+    <div>
+      <span class="profile-section">Overall Carbon Savings</span>
+      <span style="float:right; margin-right: 8px" class="right">{{treesSaved}} Trees Saved</span>
+    </div>
+  </ion-slide>
   <ion-slide>
   <div class="profile-icon">
-    <i class="icon ion-leaf profile-icon-leaf green-color"></i>
+    <i class="icon ion-waterdrop profile-icon-water blue-color"></i>
   </div>
   <div>
-    <span class="profile-section">Overall Carbon Savings</span>
-    <span style="float:right; margin-right: 8px" class="right">{{treesSaved}} Trees Saved</span>
+    <span class="profile-section">Overall Water Savings</span>
+    <span style="float:right; margin-right: 8px" class="right">{{waterSaved}} Gallons Saved</span>
   </div>
-</ion-slide>
-<ion-slide>
-<div class="profile-icon">
-  <i class="icon ion-waterdrop profile-icon-water blue-color"></i>
-</div>
-<div>
-  <span class="profile-section">Overall Water Savings</span>
-  <span style="float:right; margin-right: 8px" class="right">{{waterSaved}} Gallons Saved</span>
-</div>
-</ion-slide>
-</ion-slide-box>
-<hr class="horiz-break"/>
-</div>
+  </ion-slide>
+  </ion-slide-box>
+  <hr class="horiz-break"/>
+  </div>
 
 
 <!-- Graphs -->
@@ -54,12 +57,12 @@
     <a class="item item-icon-left graphSelector" ng-click="bestWeek()">
       <i class="icon ion-happy"></i>
       <span class="graphSelectorTitle middle">Best Week</span>
-      <span style="float:right" class="right middle">Nov 5 - 11, 2014</span>
+      <span style="float:right" class="right middle">{{startEndBestWeek}}</span>
     </a>
     <a class="item item-icon-left graphSelector" ng-click="worstWeek()">
       <i class="icon ion-sad"></i>
       <span class="graphSelectorTitle middle">Worst Week</span>
-      <span style="float:right" class="right middle">Sept 7 - 13, 2014</span>
+      <span style="float:right" class="right middle">{{startEndWorstWeek}}</span>
     </a>
   </div>
 
@@ -86,12 +89,12 @@
   </div>
   <div class="item statistic">
     <span class="statTitle statMiddle">Activities Completed</span>
-    <span style="float:right" class="right statMiddle stat">435</span>
+    <span style="float:right" class="right statMiddle stat">{{totalActivities}}</span>
   </div>
 </div>
 <br>
-
-</ion-content>
+</div>
+  </ion-content>
 </ion-view>
 
 

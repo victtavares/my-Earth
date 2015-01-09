@@ -3,36 +3,39 @@ var paradropCtrl = angular.module('controllers.profile',['services.activityModel
 paradropCtrl.controller('profileCtrl',
 	function($scope,$ionicModal,activityModel, activityDoneList) {
 
-		//console.log(activityDoneList);
+		if (activityDoneList.length == 0) {
+
+			console.log('no items in the activityDoneList');
+			document.getElementById('textIfNoItems').style.display = 'block';
+		} else {
+			$scope.showData = true;
+			$scope.totalActivities = activityDoneList.length;
+		}
 
 
 
-		//$ionicLoading.show({
-		//	template: 'Loading...'
-		//});
-		//var promise = activityModel.getUserActivityDoneList();
-		//promise.then(function(results) {
-		//	console.log(results);
-		//
-		//
-		//
-		//
-		//	$ionicLoading.hide();
-		//}, function(error) {
-		//	$ionicLoading.hide();
-        //
-		//});
+		var getTotalPointsSaved = function () {
+			var activity;
+			var returnData = [0,0];
+			for (i = 0; i < activityDoneList.length; i++) {
+				activity = activityDoneList[i].get("activity");
+				if (activity.get("pointCategory") == "Pounds of Carbon") {
+					returnData[0] = returnData[0] + activity.get("points");
+				} else {
+					returnData[1] = returnData[1] + activity.get("points");
+				}
+			}
 
-		//bullshit data to initialize chart
+			return returnData;
+		}
+		var totalPoints = getTotalPointsSaved();
 
-		var overallPoundsCarbonSaved = 1500;
-			//TODO: Create service for this.
+		var overallPoundsCarbonSaved = totalPoints[0];
 
 
 		var treesPerPoundOfCarbon = 2.9;
 
-		var galsOfWaterSaved = 345;
-		 	//TODO: Create service for this.
+		var galsOfWaterSaved = totalPoints[1];
 
 		$scope.treesSaved = Math.round(overallPoundsCarbonSaved * treesPerPoundOfCarbon);
 		$scope.waterSaved = Math.round(galsOfWaterSaved);
@@ -74,49 +77,194 @@ paradropCtrl.controller('profileCtrl',
 	  	var ctx = document.getElementById("myChart").getContext("2d");
 	  	var myLineChart = new Chart(ctx).Line(data, options);
 
-	  	$scope.bestWeek = function() {
 
-		    console.log('bestWeek');
+		var removeOldData = function(numNewDataPoints) {
 
-		    //TODO: Get these values
-		    var h2o = {mon: 32, tue: 56, wed: 63, thur: 80, fri: 24, sat: 33, sund: 42};
-		    var co2 = {mon: 43, tue: 63, wed: 34, thur: 72, fri: 76, sat: 47, sund: 50};
+			var numPoints = myLineChart.datasets[0].points.length;
+
+			for (var i = 0; i < numPoints - numNewDataPoints; i++) {
+
+				myLineChart.removeData();
+
+			}
+
+		}
 
 
-		    myLineChart.addData([co2.mon, h2o.mon], "Monday"); 
-		    myLineChart.addData([co2.tue, h2o.tue], "Tuesday");
-		    myLineChart.addData([co2.wed, h2o.wed], "Wednesday");
-		    myLineChart.addData([co2.thur, h2o.thur], "Thursday");
-		    myLineChart.addData([co2.fri, h2o.fri], "Friday");
-		    myLineChart.addData([co2.sat, h2o.sat], "Saturday");
-		    myLineChart.addData([co2.sund, h2o.sund], "Sunday");
+		//------------------------ BEST AND WORST WEEK DATA -----------------------------------------
 
-		    removeOldData(7);
 
-		    myLineChart.update();
+		var belongsCurrentWeek = function(date, dateFromCurrentWeek) {
+			var dateToBeChecked = moment(date);
 
-	  	}
+			if (dateToBeChecked.isSame(dateFromCurrentWeek,"week")) {
+				return true;
+			} else {
+				return false;
+			}
+
+		}
+
+		var calculatePointsByByWeek = function () {
+			var finalData = [];
+			var currentActivity;
+			var currentWeekData = null;
+			var currentWeekKey = 0;
+			var firstDateCurrentWeek;
+
+			for (i = 0; i < activityDoneList.length; i++) {
+				//First array interaction
+				if (i == 0) {
+					//Creating the currentWeekData object
+					currentActivity = activityDoneList[i].get("activity");
+					currentWeekData = {"totalPoints":currentActivity.get("points"),"startActivity":0,"endActivity":0};
+					finalData[currentWeekKey] = currentWeekData;
+					firstDateCurrentWeek = activityDoneList[i].createdAt;
+				}
+				else {
+					 if (belongsCurrentWeek(activityDoneList[i].createdAt, firstDateCurrentWeek)) {
+						 currentActivity = activityDoneList[i].get("activity");
+						 finalData[currentWeekKey].totalPoints = finalData[currentWeekKey].totalPoints + currentActivity.get("points");
+					 } else {
+						 //End Activity is the previous one
+						 currentWeekData.endActivity = i -1;
+						 currentActivity = activityDoneList[i].get("activity")
+						 //Getting Ready to the next interaction
+						 currentWeekKey++;
+						 currentWeekData = {"totalPoints":currentActivity.get("points"),"startActivity":i,"endActivity":i};
+						 finalData[currentWeekKey] = currentWeekData;
+						 firstDateCurrentWeek = activityDoneList[i].createdAt;
+					 }
+				}
+			}
+
+			if (currentWeekData) {
+				currentWeekData.endActivity = i -1;
+			}
+
+			//console.log(activityDoneList.length);
+			//console.log(finalData);
+			return finalData;
+
+
+		}
+
+		var joinActivityByWeek  = function (initialPosition, lastPosition){
+			var dayKey;
+			var pointsCategory;
+			var pointsWeek = {};
+			var finalData = {};
+			var currentActivity;
+
+
+			finalData.startDate = moment(activityDoneList[initialPosition].createdAt).day(0);
+			finalData.endDate = moment(activityDoneList[initialPosition].createdAt).day(6);
+
+			//Initialize Day of the week
+			for (i = 0; i < 7; i++) {
+				pointsWeek[i] = [0,0];
+			}
+
+			for (i = initialPosition; i <= lastPosition; i++) {
+				dayKey = activityDoneList[i].createdAt.getDay();
+				currentActivity = activityDoneList[i].get("activity");
+				pointsCategory = pointsWeek[dayKey];
+				if (currentActivity.get("pointCategory") == "Pounds of Carbon") {
+					pointsCategory[0] = pointsCategory[0] + currentActivity.get("points");
+				} else {
+					pointsCategory[1] = pointsCategory[1] + currentActivity.get("points");
+				}
+			}
+
+			finalData.data = pointsWeek;
+			//console.log(finalData);
+			return finalData;
+		}
+
+
+		var getWorstWeek = function (allWeeksData) {
+			if (allWeeksData.length > 0) {
+				var lowerValue = allWeeksData[0].totalPoints;
+				var index = 0;
+			}
+
+			for (i = 1; i < allWeeksData.length; i++) {
+				if (allWeeksData[i].totalPoints <= lowerValue) {
+					index = i;
+					lowerValue = allWeeksData[i].totalPoints;
+				}
+			}
+			return allWeeksData[index];
+		}
+
+
+		var getBestWeek = function (allWeeksData) {
+
+			if (allWeeksData.length > 0) {
+				var higherValue = allWeeksData[0].totalPoints;
+				var index = 0;
+			}
+
+			for (i = 1; i < allWeeksData.length; i++) {
+				if (allWeeksData[i].totalPoints >= higherValue) {
+					index = i;
+					lowerValue = allWeeksData[i].totalPoints;
+				}
+			}
+			return allWeeksData[index];
+		}
+
+		if (activityDoneList.length > 0) {
+			var allWeeksData = calculatePointsByByWeek();
+			var worstWeek = getWorstWeek(allWeeksData);
+			var bestWeek = getBestWeek(allWeeksData);
+			var worstWeekData = joinActivityByWeek(worstWeek.startActivity,worstWeek.endActivity);
+			var bestWeekData = joinActivityByWeek(bestWeek.startActivity,bestWeek.endActivity);
+			$scope.startEndWorstWeek = worstWeekData.startDate.format("MMM D") + " - " + worstWeekData.endDate.format("MMM D");
+			$scope.startEndBestWeek = bestWeekData.startDate.format("MMM D") + " - " + bestWeekData.endDate.format("MMM D");
+		}
+
+
 
 	  	$scope.worstWeek = function() {
 
 
-	  		//TODO: Get these values
-		  var h2o = {mon: 23, tue: 43, wed: 34, thur: 52, fri: 16, sat: 37, sund: 24};
-		  var co2 = {mon: 23, tue: 35, wed: 49, thur: 84, fri: 25, sat: 32, sund: 38};
+			var pointsThisWeek = worstWeekData.data;
+			var numNewDataPoints = Object.keys(pointsThisWeek).length;
 
-		  myLineChart.addData([co2.mon, h2o.mon], "Monday"); 
-		  myLineChart.addData([co2.tue, h2o.tue], "Tuesday");
-		  myLineChart.addData([co2.wed, h2o.wed], "Wednesday");
-		  myLineChart.addData([co2.thur, h2o.thur], "Thursday");
-		  myLineChart.addData([co2.fri, h2o.fri], "Friday");
-		  myLineChart.addData([co2.sat, h2o.sat], "Saturday");
-		  myLineChart.addData([co2.sund, h2o.sund], "Sunday");
+			for (var weekDay in pointsThisWeek) {
+				myLineChart.addData(pointsThisWeek[weekDay], getDayTitle(weekDay));
+			}
 
-		  removeOldData(7);
+			removeOldData(numNewDataPoints);
 
-		  myLineChart.update();
+			myLineChart.update();
+
+
 
 		}
+
+		$scope.bestWeek = function() {
+			var pointsThisWeek = bestWeekData.data;
+			var numNewDataPoints = Object.keys(pointsThisWeek).length;
+
+			for (var weekDay in pointsThisWeek) {
+				myLineChart.addData(pointsThisWeek[weekDay], getDayTitle(weekDay));
+			}
+
+			removeOldData(numNewDataPoints);
+
+			myLineChart.update();
+
+
+		}
+
+
+
+
+
+
+
 
 		//------------------------ ALL TIME DATA -----------------------------------------
 
@@ -228,11 +376,24 @@ paradropCtrl.controller('profileCtrl',
 		}
 
 		// change the period of time text
-		var month = activityDoneList[0].createdAt.getMonth() + 1;
-		var firstDate = getMonthTitle(month) + "/" + activityDoneList[0].createdAt.getFullYear();
-		month = activityDoneList[activityDoneList.length-1].createdAt.getMonth() +1;
-		var lastDate = getMonthTitle(month)  + "/" + activityDoneList[activityDoneList.length-1].createdAt.getFullYear();
-		$scope.startEndMonthAllTime = firstDate + " - " + lastDate;
+		if (activityDoneList.length > 0) {
+			var month = activityDoneList[0].createdAt.getMonth() + 1;
+			var firstDate = getMonthTitle(month) + "/" + activityDoneList[0].createdAt.getFullYear();
+			month = activityDoneList[activityDoneList.length-1].createdAt.getMonth() +1;
+			var lastDate = getMonthTitle(month)  + "/" + activityDoneList[activityDoneList.length-1].createdAt.getFullYear();
+			$scope.startEndMonthAllTime = firstDate + " - " + lastDate;
+			$scope.allTime();
+		}
+
+
+
+
+
+
+
+
+
+
 
 		//------------------------ THIS WEEK DATA -----------------------------------------
 
@@ -313,30 +474,12 @@ paradropCtrl.controller('profileCtrl',
 		firstDate = getMonthTitle(getFirstDayWeek().getMonth() + 1) + " " + firstDayWeek.getDate();
 		d = new Date();
 		lastDate = getMonthTitle(d.getMonth() +1) + " " + d.getDate();
-		$scope.startEndThisWeek = firstDate + " - " + lastDate
-
-
-
-
-		var removeOldData = function(numNewDataPoints) {
-
-		  var numPoints = myLineChart.datasets[0].points.length;
-
-		  for (var i = 0; i < numPoints - numNewDataPoints; i++) {
-
-		    myLineChart.removeData();
-
-		  }
-
-		}
+		$scope.startEndThisWeek = firstDate + " - " + lastDate;
 
 
 
 
 
 
-
-
-		$scope.allTime();
 
 });
