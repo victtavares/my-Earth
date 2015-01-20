@@ -112,6 +112,11 @@ app.config(function($stateProvider, $urlRouterProvider) {
                     templateUrl: "templates/impact.html",
                     controller:'impactCtrl'
                 }
+            },
+            resolve: {
+                activityDoneList: function(activityModel) {
+                    return activityModel.getUserActivityDoneList();
+                }
             }
         })
 

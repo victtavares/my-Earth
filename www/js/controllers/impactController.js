@@ -1,9 +1,27 @@
 var paradropCtrl = angular.module('controllers.impact',[]);
 
 paradropCtrl.controller('impactCtrl',
-    function($scope, $state) {
+    function($scope, $state, activityDoneList) {
 
-    	var lbsCarbonSavedThisWeek = 140;
+
+		var getTotalPointsSaved = function () {
+			var activity;
+			var returnData = [0,0];
+			for (i = 0; i < activityDoneList.length; i++) {
+				activity = activityDoneList[i].get("activity");
+				if (activity.get("pointCategory") == "Pounds of Carbon") {
+					returnData[0] = returnData[0] + activity.get("points");
+				} else {
+					returnData[1] = returnData[1] + activity.get("points");
+				}
+			}
+
+			return returnData;
+		}
+
+		var totalPoints = getTotalPointsSaved();
+		console.log(totalPoints);
+    	var lbsCarbonSavedThisWeek = totalPoints[0] + totalPoints[1];
             //TODO: Create service for this.
 
 
