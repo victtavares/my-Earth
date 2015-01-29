@@ -21,14 +21,14 @@ paradropCtrl.controller('impactCtrl',
 
 		var totalPoints = getTotalPointsSaved();
 		console.log(totalPoints);
-    	var lbsCarbonSavedThisWeek = totalPoints[0] + totalPoints[1];
+    	var lbsCarbonSavedThisWeek = totalPoints[0];
             //TODO: Create service for this.
 
 
     	var conversionMultiplier = .04088161;
     	var secondaryMultiplier = .559159;
 
-    	$scope.carbonSaved = Math.round(lbsCarbonSavedThisWeek);
+    	$scope.carbonSaved = Math.round(lbsCarbonSavedThisWeek * 100) / 100;
 
     	$scope.tier = Math.floor(lbsCarbonSavedThisWeek * conversionMultiplier * secondaryMultiplier) + 1;
 

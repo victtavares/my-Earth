@@ -32,13 +32,14 @@ paradropCtrl.controller('profileCtrl',
 
 		var overallPoundsCarbonSaved = totalPoints[0];
 
+		$scope.poundsCarbon = Math.round(overallPoundsCarbonSaved * 100) / 100;
 
 		var treesPerPoundOfCarbon = 2.9;
 
 		var galsOfWaterSaved = totalPoints[1];
 
 		$scope.treesSaved = Math.round(overallPoundsCarbonSaved * treesPerPoundOfCarbon);
-		$scope.waterSaved = Math.round(galsOfWaterSaved);
+		$scope.waterSaved = Math.round(galsOfWaterSaved * 100) / 100;
 
 		var data = {
 		  labels: ["air", "water", "wind", "fire"],
@@ -378,9 +379,9 @@ paradropCtrl.controller('profileCtrl',
 		// change the period of time text
 		if (activityDoneList.length > 0) {
 			var month = activityDoneList[0].createdAt.getMonth() + 1;
-			var firstDate = getMonthTitle(month) + "/" + activityDoneList[0].createdAt.getFullYear();
+			var firstDate = getMonthTitle(month) + " " + (activityDoneList[0].createdAt.getFullYear());
 			month = activityDoneList[activityDoneList.length-1].createdAt.getMonth() +1;
-			var lastDate = getMonthTitle(month)  + "/" + activityDoneList[activityDoneList.length-1].createdAt.getFullYear();
+			var lastDate = getMonthTitle(month)  + " " + (activityDoneList[activityDoneList.length-1].createdAt.getFullYear());
 			$scope.startEndMonthAllTime = firstDate + " - " + lastDate;
 			$scope.allTime();
 		}

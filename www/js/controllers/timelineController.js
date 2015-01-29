@@ -61,7 +61,7 @@ paradropCtrl.controller('timelineCtrl',
                         activityCategory: activities[i].get('category'),
                         points: activities[i].get('points'),
                         pointCategory: activities[i].get('pointCategory'),
-                        description: activities[i].get('description')
+                        description: activities[i].get('Description')
                     };
                       
                     activityList.push(activity);
