@@ -21,10 +21,16 @@ myEarthCtrl.controller('registerCtrl',
         if (($scope.registerData) && ($scope.registerData.password) && ($scope.registerData.username) ) {
 
             var user = new Parse.User();
+            var isBearImage = false;
+
+            if (Math.random() > .5) {
+                isBearImage = true;
+            }
 
             user.set("username", $scope.registerData.username);
             user.set("password", $scope.registerData.password);
             user.set('todoList', []);
+            user.set('bearImage', isBearImage);
 
             console.log('parse request: user signup');
 

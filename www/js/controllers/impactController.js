@@ -3,6 +3,14 @@ var paradropCtrl = angular.module('controllers.impact',[]);
 paradropCtrl.controller('impactCtrl',
     function($scope, $state, activityDoneList) {
 
+        bearImage = Parse.User.current().get('bearImage');
+        console.log(bearImage);
+
+        $scope.bearOrForest = 'forest';
+
+        if (bearImage) {
+            $scope.bearOrForest = 'polarBear';
+        }
 
 		var getTotalPointsSaved = function () {
 			var activity;

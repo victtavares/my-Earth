@@ -61,9 +61,13 @@ paradropCtrl.controller('timelineCtrl',
                         activityCategory: activities[i].get('category'),
                         points: activities[i].get('points'),
                         pointCategory: activities[i].get('pointCategory'),
+                        abbrCategory: 'lbs',
                         description: activities[i].get('Description')
                     };
                       
+                    if (activity.pointCategory == 'Gallons of Water'){
+                        activity.abbrCategory = 'gal';
+                    }  
                     activityList.push(activity);
                 }
 

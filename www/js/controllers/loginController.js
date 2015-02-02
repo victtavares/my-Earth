@@ -71,6 +71,17 @@ myEarthCtrl.controller('loginCtrl',
         animation: 'slide-in-up'
     });
 
+    // ---------------------- Loading Forgot Modal ---------------------
+    $ionicModal.fromTemplateUrl('templates/terms.html', function($ionicModal) {
+
+        $scope.termsModal = $ionicModal;
+    }, {
+        // Use our scope for the scope of the modal to keep it simple
+        scope: $scope,
+        // The animation we want to use for the modal entrance
+        animation: 'slide-in-up'
+    });
+
 
 
     // ---------------------- close forgot Modal ---------------------
@@ -121,7 +132,7 @@ myEarthCtrl.controller('loginCtrl',
             error:function(error) {
                 $ionicPopup.alert({
                   title: error
-                  });
+                });
             }
         });
     } 
@@ -132,6 +143,11 @@ myEarthCtrl.controller('loginCtrl',
     // ---------------------- close Modal ---------------------
     $scope.closeSignUp = function () {
         $scope.modal.hide();
+    }
+
+    // ---------------------- close Modal ---------------------
+    $scope.closeTerms = function () {
+        $scope.termsModal.hide();
     }
 
 });

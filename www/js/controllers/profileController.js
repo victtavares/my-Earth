@@ -308,7 +308,7 @@ paradropCtrl.controller('profileCtrl',
 			var month = activityDoneList[0].createdAt.getMonth();
 			var year = activityDoneList[0].createdAt.getFullYear();
 			//Getting first activity
-			var monthYear = getMonthTitle(month+1) +"/" +year.toString();
+			var monthYear = getMonthTitle(month+1) +" " + year.toString();
 			var activity = activityDoneList[0].get("activity");
 			//adding points to the first activity according to the category, //category 0 = Pounds of carbon , category 1 = Water
 			if (activity.get("pointCategory") == "Pounds of Carbon") {
@@ -360,9 +360,9 @@ paradropCtrl.controller('profileCtrl',
 				var year = activityDoneList[activityDoneList.length-1].createdAt.getFullYear();
 				if (month == 0) {
 					month = 12;
-					year = year -1;
+					year = year - 1;
 				}
-				var monthYear = getMonthTitle(month) +"/" +year.toString();
+				var monthYear = getMonthTitle(month) + " " +year.toString();
 				myLineChart.addData([0,0], monthYear);
 				numNewDataPoints++;
 			}
@@ -376,15 +376,7 @@ paradropCtrl.controller('profileCtrl',
 
 		}
 
-		// change the period of time text
-		if (activityDoneList.length > 0) {
-			var month = activityDoneList[0].createdAt.getMonth() + 1;
-			var firstDate = getMonthTitle(month) + " " + (activityDoneList[0].createdAt.getFullYear());
-			month = activityDoneList[activityDoneList.length-1].createdAt.getMonth() +1;
-			var lastDate = getMonthTitle(month)  + " " + (activityDoneList[activityDoneList.length-1].createdAt.getFullYear());
-			$scope.startEndMonthAllTime = firstDate + " - " + lastDate;
-			$scope.allTime();
-		}
+		
 
 
 
@@ -466,7 +458,6 @@ paradropCtrl.controller('profileCtrl',
 			}
 
 		  removeOldData(numNewDataPoints);
-
 		  myLineChart.update();
 
 		}
@@ -477,7 +468,15 @@ paradropCtrl.controller('profileCtrl',
 		lastDate = getMonthTitle(d.getMonth() +1) + " " + d.getDate();
 		$scope.startEndThisWeek = firstDate + " - " + lastDate;
 
-
+		// change the period of time text
+		if (activityDoneList.length > 0) {
+			var month = activityDoneList[0].createdAt.getMonth() + 1;
+			var firstDate = getMonthTitle(month) + " " + (activityDoneList[0].createdAt.getFullYear());
+			month = activityDoneList[activityDoneList.length-1].createdAt.getMonth() +1;
+			var lastDate = getMonthTitle(month)  + " " + (activityDoneList[activityDoneList.length-1].createdAt.getFullYear());
+			$scope.startEndMonthAllTime = firstDate + " - " + lastDate;
+			$scope.thisWeek();
+		}
 
 
 
