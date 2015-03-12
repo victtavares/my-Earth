@@ -3,7 +3,35 @@
 
   text-align: center;
   font-size: 14px;
-  color: #002242;
+  color: white;
+  font-family: "Montserrat Regular", sans-serif;
+  font-weight: bold;
+  /*font-size: 3.6vw;*/
+  height: 32px;
+  width: 50%;
+  margin-left: 25%;
+  letter-spacing:0.0125em;
+  background: rgb(0, 0, 0); /* fallback color */
+  background: rgba(0, 0, 0, 0.12);
+  padding-top: 6px;
+
+}
+
+#titleText {
+
+  text-align: center;
+  font-size: 14px;
+  color: white;
+  font-family: "Montserrat Regular", sans-serif;
+  font-weight: bold;
+  /*font-size: 3.6vw;*/
+  height: 69px;
+  width: 70%;
+  margin-left: 15%;
+  letter-spacing:0.0125em;
+  background: rgb(0, 0, 0); /* fallback color */
+  background: rgba(0, 0, 0, 0.12);
+  padding-top: 6px;
 
 }
 
@@ -13,6 +41,10 @@
   font-size: 14px;
   margin: 16px;
 
+}
+
+.loginEmailPass {
+  height: 42px;
 }
 
 .green-background {
@@ -74,6 +106,12 @@
     background: #e4e4e4;
 }
 
+.background-image {
+  width:100%;
+  height:100%;
+  position: absolute;
+}
+
 .cardColor {
     background: #90f690;
 }
@@ -82,19 +120,41 @@
     background: #b6f6b6;
 }
 
+.bottom-login-div {
+  position: absolute;
+  width: 100%;
+  bottom: 28px;
+}
 
 .textColor {
-    color: #ffffff;
+  color: #ffffff;
+}
+
+.loginFields {
+  width: 80%;
+  margin-left: 10%;
+  background: rgba(0,0,0,0.001);
+}
+
+.loginPic {
+  width:100%;
+  margin-bottom: -12px;
+  padding-top:10%;
+  margin-top: 0px;
+  position: relative;
 }
 
 
+.fbLoginButton {
+  position: relative;
+  width: 76%;
+  height: 76%;
+  margin-left: 12%;
+}
 
 .polarBearImg {
-
   max-width: "80%";
-
 }
-
 
 #progress {
  width: 500px;   

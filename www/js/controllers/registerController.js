@@ -1,5 +1,4 @@
-var myEarthCtrl = angular.module('controllers.register',[
-]);
+var myEarthCtrl = angular.module('controllers.register',[]);
 
 
 myEarthCtrl.controller('registerCtrl',
@@ -8,8 +7,6 @@ myEarthCtrl.controller('registerCtrl',
     // initialization for certain vars
 
     $scope.registerData = {};
-
-    
 
     // ---------------------- Sign up ---------------------
 
@@ -28,6 +25,7 @@ myEarthCtrl.controller('registerCtrl',
             }
 
             user.set("username", $scope.registerData.username);
+            user.set("email", $scope.registerData.username);
             user.set("password", $scope.registerData.password);
             user.set('todoList', []);
             user.set('bearImage', isBearImage);

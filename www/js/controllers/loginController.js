@@ -1,11 +1,19 @@
-var myEarthCtrl = angular.module('controllers.login',[
-    ]);
+var myEarthCtrl = angular.module('controllers.login',['ionic.utils']);
 
-myEarthCtrl.controller('loginCtrl',
-    function ($scope, $rootScope,$ionicPopup,$ionicLoading,$state, $ionicModal) {
+myEarthCtrl.controller('loginCtrl', function ($scope, $rootScope,$ionicPopup,$ionicLoading,$state, $ionicModal, $localStorage) {
 
-        // ---------------------- Login Function ---------------------
-        $scope.login = function () {
+    var lastUserEmail = $localStorage.get('lastUserEmail');
+    console.log('last user email: ' + lastUserEmail);
+
+    $scope.loginData = {};
+
+    if (lastUserEmail) {
+        $scope.loginData.username = lastUserEmail;
+    }
+
+
+    // ---------------------- Login Function ---------------------
+    $scope.login = function () {
         // Loading...
         $ionicLoading.show({
             template: 'Loading...'
@@ -16,6 +24,8 @@ myEarthCtrl.controller('loginCtrl',
             console.log('parse request: user login');
             Parse.User.logIn($scope.loginData.username, $scope.loginData.password, {
                 success: function(privUser) {
+
+                    $localStorage.set('lastUserEmail', $scope.loginData.username);
 
                     $ionicLoading.hide();
                     $state.go('app.timeline');
@@ -38,17 +48,17 @@ myEarthCtrl.controller('loginCtrl',
 
 
         } else {
-          $ionicLoading.hide();
-          $ionicPopup.alert({
-            title: 'Blank Fields',
-            template: "<p>You must enter a username and password to log in.</p>",
-            okText: 'OK'
-        });
-    }
-};
+            $ionicLoading.hide();
+            $ionicPopup.alert({
+                title: 'Blank Fields',
+                template: "<p>You must enter a username and password to log in.</p>",
+                okText: 'OK'
+            });
+        }
+    };
 
 
-    // ---------------------- Loading Modal ---------------------
+    // ---------------------- Loading Signup Modal ---------------------
     $ionicModal.fromTemplateUrl('templates/register.html', function($ionicModal) {
 
         $scope.modal = $ionicModal;
@@ -71,7 +81,7 @@ myEarthCtrl.controller('loginCtrl',
         animation: 'slide-in-up'
     });
 
-    // ---------------------- Loading Forgot Modal ---------------------
+    // ---------------------- Loading Terms Modal ---------------------
     $ionicModal.fromTemplateUrl('templates/terms.html', function($ionicModal) {
 
         $scope.termsModal = $ionicModal;
@@ -83,12 +93,10 @@ myEarthCtrl.controller('loginCtrl',
     });
 
 
-
     // ---------------------- close forgot Modal ---------------------
     $scope.closeForgot = function () {
         $scope.forgotmodal.hide();
     }
-
 
 
     $scope.checkUserInfoForNewPass = function () {
@@ -131,13 +139,11 @@ myEarthCtrl.controller('loginCtrl',
             },
             error:function(error) {
                 $ionicPopup.alert({
-                  title: error
+                  title: error.message
                 });
             }
         });
     } 
-
-
 
 
     // ---------------------- close Modal ---------------------
