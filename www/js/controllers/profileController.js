@@ -3,6 +3,10 @@ var paradropCtrl = angular.module('controllers.profile',['services.activityModel
 paradropCtrl.controller('profileCtrl',
 	function($scope,$ionicModal,activityModel, activityDoneList) {
 
+		if(typeof analytics !== "undefined") {
+    		analytics.trackView('Profile');
+    	}
+
 		if (activityDoneList.length == 0) {
 
 			console.log('no items in the activityDoneList');
@@ -34,7 +38,7 @@ paradropCtrl.controller('profileCtrl',
 
 		$scope.poundsCarbon = Math.round(overallPoundsCarbonSaved * 100) / 100;
 
-		var treesPerPoundOfCarbon = 2.9;
+		var treesPerPoundOfCarbon = 5.2;
 
 		var galsOfWaterSaved = totalPoints[1];
 
@@ -77,7 +81,6 @@ paradropCtrl.controller('profileCtrl',
 
 	  	var ctx = document.getElementById("myChart").getContext("2d");
 	  	var myLineChart = new Chart(ctx).Line(data, options);
-
 
 		var removeOldData = function(numNewDataPoints) {
 
@@ -378,16 +381,6 @@ paradropCtrl.controller('profileCtrl',
 
 		
 
-
-
-
-
-
-
-
-
-
-
 		//------------------------ THIS WEEK DATA -----------------------------------------
 
 		var getFirstDayWeek = function () {
@@ -437,7 +430,7 @@ paradropCtrl.controller('profileCtrl',
 
 		var getDayTitle = function(thisDay) {
 			switch(thisDay) {
-				case "0":return "Sunday";
+				case "0": return "Sunday";
 				case "1": return "Monday";
 				case "2": return "Tuesday";
 				case "3": return "Wednesday";
@@ -455,6 +448,15 @@ paradropCtrl.controller('profileCtrl',
 
 			for (var weekDay in pointsThisWeek) {
 				myLineChart.addData(pointsThisWeek[weekDay], getDayTitle(weekDay));
+			}
+
+			if (pointsThisWeek.length == 1){
+				myLineChart.addData(0, 'Monday');
+				myLineChart.addData(0, 'Tuesday');
+				myLineChart.addData(0, 'Wednesday');
+				myLineChart.addData(0, 'Thursday');
+				myLineChart.addData(0, 'Friday');
+				myLineChart.addData(0, 'Saturday');
 			}
 
 		  removeOldData(numNewDataPoints);

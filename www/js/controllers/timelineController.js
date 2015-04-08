@@ -6,15 +6,14 @@ var paradropCtrl = angular.module('controllers.timeline',[
 paradropCtrl.controller('timelineCtrl',
     function($scope,$ionicModal, $state, $localStorage, $ionicLoading, $ionicPopup, activityModel) {
 
-
+        if(typeof analytics !== "undefined") {
+            analytics.trackView('Activities');
+        }
 
         //basics
 
         $scope.activityAddedPhrase = "Added!";
         $scope.activityNotAddedPhrase = "Add Activity";
-
-
-
 
 
         // ---------------------- Loading Modal ---------------------
@@ -334,9 +333,6 @@ paradropCtrl.controller('timelineCtrl',
                   okText: 'OK'
                 });
             });
-
-
-
         }
 
 
@@ -380,6 +376,47 @@ paradropCtrl.controller('timelineCtrl',
         }
 
 
+        $scope.reminder = function(activityName, hasReminder){
+
+            var reminderExists = $localStorage.get('reminderExists');
+
+            if (hasReminder) {
+                cordova.plugins.notification.local.cancel(1, function () {
+                    // Notification was cancelled
+                }, null);
+            } else if (reminderExists) {
+
+                $localStorage.set('reminderExists', false);
+
+                //todo: alert! / delete reminder if you want
+
+            } else {
+
+                //todo: select between day, week, month
+
+                freq = 'day';
+                time = new Date((new Date()).getTime + 8000);
+
+                setReminder(activityName, time, freq);
+
+            }
+
+        }
+
+        function setReminder(activityName, time, freq) {
+
+            cordova.plugins.notification.local.schedule({
+                id: 1,
+                text: "Remember to complete your activity today: " + activityName,
+                firstAt: tomorrow_at_8_am,
+                every: "day" // "week", "month", "year"
+            });
+
+            $localStorage.set('reminderExists', true);
+
+        }
+
+
         //$scope.alertPoints = function(points, category) {
         //
         //    $ionicPopup.alert({
@@ -397,6 +434,10 @@ paradropCtrl.controller('timelineCtrl',
             $ionicLoading.show({
                 template: 'Loading...'
             });
+
+            if (typeof analytics !== 'undefined'){
+                analytics.trackEvent('Activity', activityName);
+            }
 
             console.log("---- Do activity ------")
             // Getting the activity from Parse

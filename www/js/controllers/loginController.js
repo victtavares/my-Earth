@@ -2,6 +2,10 @@ var myEarthCtrl = angular.module('controllers.login',['ionic.utils']);
 
 myEarthCtrl.controller('loginCtrl', function ($scope, $rootScope,$ionicPopup,$ionicLoading,$state, $ionicModal, $localStorage) {
 
+    if(typeof analytics !== "undefined") {
+        analytics.trackView('Login');
+    }
+
     var lastUserEmail = $localStorage.get('lastUserEmail');
     console.log('last user email: ' + lastUserEmail);
 

@@ -3,6 +3,9 @@ var paradropCtrl = angular.module('controllers.impact',[]);
 paradropCtrl.controller('impactCtrl',
     function($scope, $state, activityDoneList) {
 
+    if(typeof analytics !== "undefined") {
+        analytics.trackView('My Impact');
+    }
         bearImage = Parse.User.current().get('bearImage');
         console.log(bearImage);
 
@@ -30,25 +33,23 @@ paradropCtrl.controller('impactCtrl',
 		var totalPoints = getTotalPointsSaved();
 		console.log(totalPoints);
     	var lbsCarbonSavedThisWeek = totalPoints[0];
-            //TODO: Create service for this.
 
-
-    	var conversionMultiplier = .04088161;
-    	var secondaryMultiplier = .559159;
+    	var conversionMultiplier = .04088171;
+    	var secondaryMultiplier = 2.6;
 
     	$scope.carbonSaved = Math.round(lbsCarbonSavedThisWeek * 100) / 100;
 
     	$scope.tier = Math.floor(lbsCarbonSavedThisWeek * conversionMultiplier * secondaryMultiplier) + 1;
 
-    	if ($scope.tier > 5) {
-    		$scope.tier = 5;
+    	if ($scope.tier > 7) {
+    		$scope.tier = 7;
     	}
 
     	$scope.progressToNextLevel = "";
 
         var percentDone;
 
-    	if ($scope.tier < 5) {
+    	if ($scope.tier < 7) {
     		var carbonToSaveForNextLevel = ($scope.tier) / conversionMultiplier / secondaryMultiplier;
     		var progressToNext = Math.ceil(carbonToSaveForNextLevel - lbsCarbonSavedThisWeek);
 
@@ -58,16 +59,17 @@ paradropCtrl.controller('impactCtrl',
             console.log(carbonToSaveForPrevLevel + " and " + carbonToSaveForNextLevel);
             console.log(progressToNext + " from "  + thisLevelsBeginning);
 
-    		$scope.progressToNextLevel = "You need to save " + progressToNext + " more pounds this week to advance to the next level.";
+    		$scope.progressToNextLevel = "Keep up the good work! You have to save " + progressToNext + " more pounds this week to advance to the next level.";
 
     		if (progressToNext == 1) {
-    			$scope.progressToNextLevel = "You need to save " + progressToNext + " more pound this week to advance to the next level.";
+    			$scope.progressToNextLevel = "Keep up the good work! You have to save " + progressToNext + " more pound this week to advance to the next level.";
     		}
 
             percentDone = 100*(lbsCarbonSavedThisWeek - thisLevelsBeginning)/(carbonToSaveForNextLevel - thisLevelsBeginning);
 
     	} else {
-    		$scope.progressToNextLevel = "Congratulations! You've done well this week.";
+            $scope.congrats = true;
+    		$scope.progressToNextLevel = "You've done incredibly well this week.";
             percentDone = 100;
     	}
 

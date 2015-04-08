@@ -35,6 +35,8 @@ myEarthCtrl.controller('registerCtrl',
             user.signUp(null, {
                 success: function(user) {
 
+                    $localStorage.set('lastUserEmail', $scope.registerData.username);
+
                     $ionicLoading.hide();
                     $scope.closeSignUp();
                     console.log('signup successful');

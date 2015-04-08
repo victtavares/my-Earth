@@ -7,7 +7,8 @@ var app = angular.module('earthApp', [
     'controllers.timeline',
     'controllers.impact',
     'controllers.profile',
-    'services.activityModel'
+    'services.activityModel',
+    'controllers.about'
 ]);
 
 
@@ -36,6 +37,14 @@ app.run(function($ionicPlatform,$rootScope,$state,$http) {
         if(window.StatusBar) {
             StatusBar.styleDefault();
         }
+
+        if(typeof analytics !== "undefined") {
+            analytics.startTrackerWithId('UA-61409067-1');
+          console.log('loaded google analytics');
+      } else {
+          console.log("Google Analytics Unavailable");
+      }
+
     });
 
     //Convert the HTTP method to a format that php can understand
@@ -101,6 +110,16 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 "menuContent" :{
                     templateUrl: "templates/timeline.html",
                     controller:'timelineCtrl'
+                }
+            }
+        })
+
+        .state('app.about', {
+            url: "/about",
+            views: {
+                "menuContent" :{
+                    templateUrl: "templates/about.html",
+                    controller: 'aboutCtrl'
                 }
             }
         })

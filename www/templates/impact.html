@@ -9,8 +9,9 @@
 
     <h2 style="text-align: center; margin-top: 12px">Level {{tier}}</h2>
     
-    <img src="img/{{bearOrForest}}{{tier}}.jpeg" style="width: 86%; margin-left: 7%"></img>
+    <!-- <img src="img/{{bearOrForest}}{{tier}}.jpeg" style="width: 86%; margin-left: 7%"></img> -->
 
+    <img src="img/Splash{{tier}}.png" style="width: 86%; margin-left: 7%"></img>
     
     <h3 style="text-align: center; width: 86%; margin-left: 7%; margin-top: 12px; color: gray" > {{carbonSaved}} lbs of Carbon</h3>
 
@@ -18,7 +19,7 @@
         <progress value="{{percentDone}}" max="100" style="width: 75%"></progress>
     </div>
 
-    <h4 style="text-align: center; width: 86%; margin-left: 7%" >{{progressToNextLevel}}</h4>
+    <h5 style="text-align: center; width: 86%; margin-left: 7%; font-size: 14px" ><b ng-if="congrats">Congratulations!<br></b>{{progressToNextLevel}}</h5>
 
     </ion-content>
 </ion-view>

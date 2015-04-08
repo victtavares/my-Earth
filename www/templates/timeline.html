@@ -24,6 +24,10 @@
                     <i ng-show="activity.pointCategory == 'Pounds of Carbon'" class="icon ion-leaf"></i>
                     Perform
                 </a>
+                <a class="tab-item" ng-click="reminder(activity.activityName)">
+                    <i class="icon ion-clock" ng-style="{ color: activity.reminder ? 'red' : 'black' }" ></i>
+                    Reminder
+                </a>
                 <a class="tab-item" ng-click="deleteActivity(activity.activityName)">
                     <i class="icon ion-trash-a"></i>
                     Delete
