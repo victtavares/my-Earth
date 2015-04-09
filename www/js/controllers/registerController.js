@@ -1,8 +1,8 @@
-var myEarthCtrl = angular.module('controllers.register',[]);
+var myEarthCtrl = angular.module('controllers.register',['ionic.utils']);
 
 
 myEarthCtrl.controller('registerCtrl',
-    function($scope, $ionicLoading, $ionicPopup, $state) {
+    function($scope, $ionicLoading, $ionicPopup, $state, $localStorage) {
 
     // initialization for certain vars
 

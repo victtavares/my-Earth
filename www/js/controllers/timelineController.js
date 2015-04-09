@@ -376,28 +376,38 @@ paradropCtrl.controller('timelineCtrl',
         }
 
 
-        $scope.reminder = function(activityName, hasReminder){
+        $scope.reminder = function(activity){
 
-            var reminderExists = $localStorage.get('reminderExists');
 
-            if (hasReminder) {
-                cordova.plugins.notification.local.cancel(1, function () {
-                    // Notification was cancelled
-                }, null);
+            if ($localStorage.get('reminderExists')){
+                var reminderExists = $localStorage.get('reminderExists');
+            } else {
+                var reminderExists = false;
+            }
+            
+            if (activity.reminder) {
+                
+                activity.reminder = false;
+                deleteReminder();
+
             } else if (reminderExists) {
 
-                $localStorage.set('reminderExists', false);
+                deleteReminder();
 
+                $localStorage.set('reminderExists', false);
+                $localStorage.set('reminderName', activity.activityName);
                 //todo: alert! / delete reminder if you want
 
             } else {
 
                 //todo: select between day, week, month
+                //todo: select a time
 
                 freq = 'day';
                 time = new Date((new Date()).getTime + 8000);
+                activity.reminder = true;
 
-                setReminder(activityName, time, freq);
+                setReminder(activity.activityName, time, freq);
 
             }
 
@@ -405,27 +415,21 @@ paradropCtrl.controller('timelineCtrl',
 
         function setReminder(activityName, time, freq) {
 
+            $localStorage.set('reminderExists', true);
+
             cordova.plugins.notification.local.schedule({
                 id: 1,
                 text: "Remember to complete your activity today: " + activityName,
-                firstAt: tomorrow_at_8_am,
-                every: "day" // "week", "month", "year"
+                firstAt: time,
+                every: freq
             });
-
-            $localStorage.set('reminderExists', true);
 
         }
 
-
-        //$scope.alertPoints = function(points, category) {
-        //
-        //    $ionicPopup.alert({
-        //            title: 'Good Work!',
-        //            template: points + ' ' + category + ' saved',
-        //            okText: 'OK'
-        //        });
-        //
-        //}
+        function deleteReminder() {
+            cordova.plugins.notification.local.cancel(1, function () {
+            }, null);
+        }
 
 
         //Do activity
