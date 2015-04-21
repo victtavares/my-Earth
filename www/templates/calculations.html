@@ -1,0 +1,57 @@
+<ion-nav-bar class="bar-positive nav-title-slide-ios7 headerBG">
+</ion-nav-bar>
+<ion-view title="Calculations" hide-back-button="true" id="contentBG">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+
+    <ion-content class="has-header content-bg" has-bouncing="true" style="padding: 12px">
+        
+        <p><b>Key assumptions, metrics and sources for our calculations</b></p>
+
+        <p>1. The number of trees saved means the number of trees it would take to sequester that much carbon from the atmosphere. Per EPA, a Silver Maple Tree sequesters .19 pounds of Carbon per day based on a medium growth, 50 year old silver maple. <a class="externalLink" ng-click="showBrowserPage('http://www.epa.gov/climatechange/Downloads/method-calculating-carbon-sequestration-trees-urban-and-suburban-settings.pdf')">http://www.epa.gov/climatechange/Downloads/method-calculating-carbon-sequestration-trees-urban-and-suburban-settings.pdf</a></p>
+
+        <p>2. The tiers for the polar bear are based off of the following equation where the tier is listed in the green box based on the user input pounds of carbon saved on the left. In this case the user would be 61% completed with tier 1 after saving 15 pounds of carbon. </p>
+
+        <p>The first tier assumes an ice block 220.32 ft<sup>3</sup> which is needed to support 1 average adult polar bear. The tiers progress linearly adding one polar bear by doubling the size of the ice block. </p>
+
+        <br>
+
+        <img ng-src="img/calc.png" style="width: 100%; height: 20px" id="calcPic">
+
+        <br><br>
+
+        <p><b>Note:</b> all outputs in this app are in pounds of carbon, if interested in pounds of CO<sub>2</sub> a simple conversion can be done. We simply calculated everything in CO<sub>2</sub> then multiplied by .272 which is the molecular ratio of Carbon in the molecule CO<sub>2</sub>. </p>
+
+        <br>
+
+        <hr /> <p><b>Thermostat Calculations</b> - <a class="externalLink" ng-click="showBrowserPage('http://www.mge.com/saving-energy/home/heating-cooling/thermostats.htm')">http://www.mge.com/saving-energy/home/heating-cooling/thermostats.htm</a></p>
+
+        <p>- Assuming a multifamily apartment and 6 months of the year it is being heated</p>
+
+        <p><b>Household Electricity Calculations</b> - <a class="externalLink" ng-click="showBrowserPage('http://www.energystar.gov/buildings/facility-owners-and-managers/existing-buildings/save-energy/purchase-energy-saving-products')">http://www.energystar.gov/buildings/facility-owners-and-managers/existing-buildings/save-energy/purchase-energy-saving-products</a> and <a class="externalLink" ng-click="showBrowserPage('http://www.epa.gov/cleanenergy/energy-resources/refs.html')">http://www.epa.gov/cleanenergy/energy-resources/refs.html</a> </p>
+
+        <p><b>Travel Calculations</b> - <a class="externalLink" ng-click="showBrowserPage('http://www.epa.gov/cleanenergy/energy-resources/refs.html')">http://www.epa.gov/cleanenergy/energy-resources/refs.html</a> and <a class="externalLink" ng-click="showBrowserPage('http://www.simplesteps.org/home-garden/energy/energy-smackdown-lose-ten-tons-2010-commuting-smarter')">http://www.simplesteps.org/home-garden/energy/energy-smackdown-lose-ten-tons-2010-commuting-smarter</a></p>
+
+        <p>- Assuming a car getting 15 miles per gallon in town for a 20 mile trip and based on EPA’s listed emissions for a passenger car</p>
+
+        <p><b>Recycling Calculations</b> - <a class="externalLink" ng-click="showBrowserPage('http://epa.gov/epawaste/conserve/tools/warm/index.html')">http://epa.gov/epawaste/conserve/tools/warm/index.html</a></p>
+
+        <p><b>Bottled Water Calculations</b> - <a class="externalLink" ng-click="showBrowserPage('http://elua.com/wp-content/uploads/2013/08/Elua-Bottled-Water-and-Our-Environment.pdf')">http://elua.com/wp-content/uploads/2013/08/Elua-Bottled-Water-and-Our-Environment.pdf</a></p>
+
+        <p>- Assuming a 24oz water bottle and that .05 pounds of carbon are produced per 16.9 oz water bottle. </p>
+
+        <p><b>Beef and Pork Calculation</b> - <a class="externalLink" ng-click="showBrowserPage('http://css.snre.umich.edu/css_doc/CSS09-05.pdf)">http://css.snre.umich.edu/css_doc/CSS09-05.pdf</a></p>
+
+        <p>- Assuming a serving size of 4 oz. </p>
+
+        <p><b>Washing Machine Information</b> - <a class="externalLink" ng-click="showBrowserPage('http://vault.sierraclub.org/sierra/200209/hidden.asp')">http://vault.sierraclub.org/sierra/200209/hidden.asp</a> and <a class="externalLink" ng-click="showBrowserPage('http://www.energystar.gov/')">http://www.energystar.gov/</a></p>
+
+        <p><b>Shipped Food Information vs. Local</b> - <a class="externalLink" ng-click="showBrowserPage('https://attra.ncat.org/attra-pub/viewhtml.php?id=281')">https://attra.ncat.org/attra-pub/viewhtml.php?id=281</a></p>
+
+        <p><b>Elevator Energy Information</b> - <a class="externalLink" ng-click="showBrowserPage('http://www.slate.com/articles/health_and_science/the_green_')">http://www.slate.com/articles/health_and_science/the_green_</a></p>
+
+
+    </ion-content>
+
+</ion-view>

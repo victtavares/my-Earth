@@ -8,7 +8,8 @@ var app = angular.module('earthApp', [
     'controllers.impact',
     'controllers.profile',
     'services.activityModel',
-    'controllers.about'
+    'controllers.about',
+    'controllers.calc'
 ]);
 
 
@@ -120,6 +121,16 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 "menuContent" :{
                     templateUrl: "templates/about.html",
                     controller: 'aboutCtrl'
+                }
+            }
+        })
+
+        .state('app.calculations', {
+            url: "/calculations",
+            views: {
+                "menuContent" :{
+                    templateUrl: "templates/calculations.html",
+                    controller: 'calcCtrl'
                 }
             }
         })

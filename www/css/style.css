@@ -28,6 +28,10 @@
 
 }
 
+.externalLink {
+  color: #5488ff;
+}
+
 #titleText {
 
   text-align: center;
@@ -35,11 +39,9 @@
   color: white;
   font-family: 'Montserrat Regular' !important;
   font-weight: bold;
-  /*font-size: 3.6vw;*/
-  height: 69px;
-  width: 70%;
-  margin-left: 15%;
-  letter-spacing: 0.0125em;
+  width: 80%;
+  margin-left: 10%;
+  letter-spacing: 0.00em;
   padding-top: 6px;
   text-shadow: 1px 2.5px #000;
 
@@ -54,9 +56,9 @@
   font-weight: bold;
   /*font-size: 3.6vw;*/
   height: 69px;
-  width: 70%;
-  margin-left: 15%;
-  letter-spacing:0.0125em;
+  width: 80%;
+  margin-left: 10%;
+  letter-spacing:0.0em;
   background: rgba(0, 0, 0, 0.08);
   padding-top: 6px;
   text-shadow: 1px 2.5px #000;
