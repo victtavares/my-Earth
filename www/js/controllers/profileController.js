@@ -3,6 +3,8 @@ var paradropCtrl = angular.module('controllers.profile',['services.activityModel
 paradropCtrl.controller('profileCtrl',
 	function($scope,$ionicModal,activityModel, activityDoneList) {
 
+		$scope.notEnoughData = false;
+
 		if(typeof analytics !== "undefined") {
     		analytics.trackView('Profile');
     	}
@@ -15,8 +17,6 @@ paradropCtrl.controller('profileCtrl',
 			$scope.showData = true;
 			$scope.totalActivities = activityDoneList.length;
 		}
-
-
 
 		var getTotalPointsSaved = function () {
 			var activity;
@@ -187,6 +187,7 @@ paradropCtrl.controller('profileCtrl',
 
 
 		var getWorstWeek = function (allWeeksData) {
+			
 			if (allWeeksData.length > 0) {
 				var lowerValue = allWeeksData[0].totalPoints;
 				var index = 0;
@@ -232,6 +233,7 @@ paradropCtrl.controller('profileCtrl',
 
 	  	$scope.worstWeek = function() {
 
+	  		$scope.notEnoughData = false;
 
 			var pointsThisWeek = worstWeekData.data;
 			var numNewDataPoints = Object.keys(pointsThisWeek).length;
@@ -249,6 +251,9 @@ paradropCtrl.controller('profileCtrl',
 		}
 
 		$scope.bestWeek = function() {
+			
+			$scope.notEnoughData = false;
+			
 			var pointsThisWeek = bestWeekData.data;
 			var numNewDataPoints = Object.keys(pointsThisWeek).length;
 
@@ -353,6 +358,9 @@ paradropCtrl.controller('profileCtrl',
 		}
 
 		$scope.allTime = function() {
+
+			$scope.notEnoughData = false;
+
 			//console.log(joinActivityByMonth());
 			var activityByMonth = joinActivityByMonth();
 			var numNewDataPoints = Object.keys(activityByMonth).length;//h2o.length;
@@ -450,17 +458,14 @@ paradropCtrl.controller('profileCtrl',
 				myLineChart.addData(pointsThisWeek[weekDay], getDayTitle(weekDay));
 			}
 
-			if (pointsThisWeek.length == 1){
-				myLineChart.addData(0, 'Monday');
-				myLineChart.addData(0, 'Tuesday');
-				myLineChart.addData(0, 'Wednesday');
-				myLineChart.addData(0, 'Thursday');
-				myLineChart.addData(0, 'Friday');
-				myLineChart.addData(0, 'Saturday');
+
+			if (numNewDataPoints == 1){
+				$scope.notEnoughData = true;
 			}
 
-		  removeOldData(numNewDataPoints);
-		  myLineChart.update();
+			removeOldData(numNewDataPoints);
+
+		  	myLineChart.update();
 
 		}
 
@@ -479,9 +484,6 @@ paradropCtrl.controller('profileCtrl',
 			$scope.startEndMonthAllTime = firstDate + " - " + lastDate;
 			$scope.thisWeek();
 		}
-
-
-
 
 
 });

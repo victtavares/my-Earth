@@ -32,6 +32,7 @@ paradropCtrl.controller('impactCtrl',
 
 		var totalPoints = getTotalPointsSaved();
 		console.log(totalPoints);
+
     	var lbsCarbonAllTime = totalPoints[0];
 
     	var conversionMultiplier = .04088171;

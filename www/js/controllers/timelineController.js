@@ -4,7 +4,7 @@ var paradropCtrl = angular.module('controllers.timeline',[
 ]);
 
 paradropCtrl.controller('timelineCtrl',
-    function($scope,$ionicModal, $state, $localStorage, $ionicLoading, $ionicPopup, activityModel) {
+    function($scope, $ionicModal, $state, $localStorage, $ionicLoading, $ionicPopup, activityModel, $window) {
 
         if(typeof analytics !== "undefined") {
             analytics.trackView('Activities');
@@ -419,7 +419,8 @@ paradropCtrl.controller('timelineCtrl',
 
             cordova.plugins.notification.local.schedule({
                 id: 1,
-                text: "Remember to complete your activity today: " + activityName,
+                title: "MyEarth",
+                text: "Remember to complete your activity: " + activityName,
                 firstAt: time,
                 every: freq
             });
@@ -473,7 +474,5 @@ paradropCtrl.controller('timelineCtrl',
             })
 
         }
-
-
 
     });

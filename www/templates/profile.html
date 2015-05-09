@@ -39,7 +39,9 @@
 <!-- Graphs -->
 <div>
 
-  <div id="chartDiv">
+  <h4 ng-show="notEnoughData" class="center" style="color: gray; width: 70%; margin: 15%; margin-top: 25%; margin-bottom: 25%">Not enough data to show plot</h4>
+
+  <div id="chartDiv" ng-show="!notEnoughData">
     <canvas id="myChart" height="240"></canvas>
   </div>
   <div class="list list-inset" style="margin-top: 4px">

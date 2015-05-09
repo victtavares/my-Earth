@@ -1,6 +1,6 @@
 var myEarthCtrl = angular.module('controllers.login',['ionic.utils']);
 
-myEarthCtrl.controller('loginCtrl', function ($scope, $rootScope,$ionicPopup,$ionicLoading,$state, $ionicModal, $localStorage) {
+myEarthCtrl.controller('loginCtrl', function ($scope, $rootScope, $ionicPopup, $ionicLoading,$state, $ionicModal, $localStorage) {
 
     if(typeof analytics !== "undefined") {
         analytics.trackView('Login');
@@ -131,6 +131,7 @@ myEarthCtrl.controller('loginCtrl', function ($scope, $rootScope,$ionicPopup,$io
             }
         });
     }
+    
 
     function sendNewPasswordEmail(email) {
 

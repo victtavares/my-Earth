@@ -8,11 +8,16 @@
     <ion-content class="has-header content-bg">
 
     <h2 style="text-align: center; margin-top: 12px">Level {{tier}}</h2>
-    
-    <!-- <img src="img/{{bearOrForest}}{{tier}}.jpeg" style="width: 86%; margin-left: 7%"></img> -->
+        
+    <ion-slide-box show-pager="false">
+      <ion-slide>
+        <img src="img/bear-{{tier}}.jpg" style="width: 86%; margin-left: 7%"></img>
+      </ion-slide>
+      <ion-slide>
+        <img src="img/forest-{{tier}}.jpg" style="width: 86%; margin-left: 7%"></img>
+      </ion-slide>
+    </ion-slide-box>
 
-    <img src="img/Splash{{tier}}.png" style="width: 86%; margin-left: 7%"></img>
-    
     <h3 style="text-align: center; width: 86%; margin-left: 7%; margin-top: 12px; color: gray" > {{carbonSaved}} lbs of Carbon</h3>
 
     <div>
