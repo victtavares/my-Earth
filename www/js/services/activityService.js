@@ -5,10 +5,8 @@ myEarthService.factory('activityModel', function($q) {
     var userTodoList;
 
 
-
-
     service.getUserActivityDoneList = function() {
-        var user = Parse.User.current();
+        var user = new Parse.User.current();
         var activity_user = Parse.Object.extend("ActivityDone_user");
         var deferred  = $q.defer();
 
@@ -21,6 +19,7 @@ myEarthService.factory('activityModel', function($q) {
             deferred.reject("Error: " + error);
         }
         var query = new Parse.Query(activity_user);
+        query.limit(1000);
         query.equalTo("user",user);
         query.ascending("createdAt");
         query.include("activity");
