@@ -487,6 +487,7 @@ paradropCtrl.controller('profileCtrl',
 
 
 		 $scope.data = {notificationFrequency: "day"}
+		 //alert($scope.data.notificationFrequency)
 		$scope.showAlarmView = function() {
 			var alertPopup = $ionicPopup.show({
         scope: $scope,
@@ -499,11 +500,12 @@ paradropCtrl.controller('profileCtrl',
         	//Cancel Previous Notification
         	window.plugin.notification.local.cancel(1, function() {});
 
-        	console.log($scope.data.notificationFrequency)
+        	
         	var desiredDate = moment();
+        	//desiredDate.add(15,"seconds")
         	desiredDate.add(1,"day")
         	desiredDate.set({'hour': 15, 'minute': 00});
-        	//Doesn't popup on bronswer
+        	//alert(desiredDate.toDate())
           window.plugin.notification.local.schedule({
                      id: 1,
                      text: 'Remember to complete your carbon Activities!',
