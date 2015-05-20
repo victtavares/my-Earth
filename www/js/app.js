@@ -1,6 +1,7 @@
 
 var app = angular.module('earthApp', [
     'ionic',
+    'ngCordova',
     'controllers.login',
     'controllers.register',
     'controllers.main',
@@ -13,7 +14,7 @@ var app = angular.module('earthApp', [
 ]);
 
 
-app.run(function($ionicPlatform,$rootScope,$state,$http) {
+app.run(function($ionicPlatform,$rootScope,$state,$http,$cordovaLocalNotification) {
 
    // When the user is going to another page!
     $rootScope.$on('$stateChangeStart',function(event, toState, toParams, fromState, fromParams) {
@@ -32,12 +33,19 @@ app.run(function($ionicPlatform,$rootScope,$state,$http) {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     $ionicPlatform.ready(function() {
+
+        if(device.platform === "iOS") {
+            $cordovaLocalNotification.promptForPermission();
+        }
+
+
         if(window.cordova && window.cordova.plugins.Keyboard) {
             cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
         }
         if(window.StatusBar) {
             StatusBar.styleDefault();
         }
+
 
         if(typeof analytics !== "undefined") {
             analytics.startTrackerWithId('UA-61409067-1');

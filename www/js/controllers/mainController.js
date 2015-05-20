@@ -15,10 +15,8 @@ paradropCtrl.controller('mainCtrl',
 
 
         $scope.logout = function () {
-        	
-        	cordova.plugins.notification.local.cancel(1, function () {
-			    console.log('notif cancelled');
-			}, null);
+        	//Cancel the notification, be careful with id, if changed there it must be changed here
+        	window.plugin.notification.local.cancel(1, function () {}, null);
 
         	Parse.User.logOut();
         	clearLocalStorage();
