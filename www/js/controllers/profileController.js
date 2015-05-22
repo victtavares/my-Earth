@@ -498,21 +498,24 @@ paradropCtrl.controller('profileCtrl',
 		        type: 'button-balanced',
 		        onTap: function(e) {
 
-		        	//Cancel Previous Notification
-		        	window.plugin.notification.local.cancel(1, function() {});
-		        	
+		        	console.log('wahta');
+
 		        	var desiredDate = moment();
 		        	desiredDate.add(3, "seconds");
 		        	// desiredDate.add(1,"day")
 		        	// desiredDate.set({'hour': 15, 'minute': 00});
 		        	alert(desiredDate.toDate());
 
+		        	//Cancel Previous Notification
+		        	// window.plugin.notification.local.cancel(1, function() {});
 		          	window.plugin.notification.local.schedule({
 	                     id: 1,
 	                     text: 'Remember to complete your carbon activities!',
 	                     every: $scope.data.notificationFrequency,
 	                     firstAt: desiredDate.toDate()
 		          	});
+
+		          	console.log('here');
 
 					alertPopup.close();
 
