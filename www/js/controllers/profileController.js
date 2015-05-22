@@ -1,7 +1,7 @@
 var paradropCtrl = angular.module('controllers.profile',['services.activityModel']);
 
 paradropCtrl.controller('profileCtrl',
-	function($scope,$ionicModal,activityModel, activityDoneList) {
+	function($scope,$ionicModal,$ionicPopup, $cordovaLocalNotification, activityModel, activityDoneList) {
 
 		$scope.notEnoughData = false;
 
@@ -484,6 +484,45 @@ paradropCtrl.controller('profileCtrl',
 			$scope.startEndMonthAllTime = firstDate + " - " + lastDate;
 			$scope.thisWeek();
 		}
+
+
+		 $scope.data = {notificationFrequency: "day"}
+		 //alert($scope.data.notificationFrequency)
+
+
+		$scope.showAlarmView = function() {
+
+			var alertPopup = $ionicPopup.show({
+		        scope: $scope,
+		        title: 'Reminder',
+		        templateUrl: 'templates/alarm.html',
+		        buttons: [{ text: 'Cancel' }, 
+		        {text: 'Save', 
+		        type: 'button-balanced',
+		        onTap: function(e) {
+		        	//Cancel Previous Notification
+		        	window.plugin.notification.local.cancel(1, function() {});
+		        	
+		        	var desiredDate = moment();
+		        	desiredDate.add(15,"seconds")
+		        	// desiredDate.add(1,"day")
+		        	// desiredDate.set({'hour': 15, 'minute': 00});
+		        	//alert(desiredDate.toDate())
+		          	window.plugin.notification.local.schedule({
+	                     id: 1,
+	                     text: 'Remember to complete your carbon Activities!',
+	                     every: $scope.data.notificationFrequency,
+	                     firstAt: desiredDate.toDate()
+		          	});
+
+		          	alertPopup.hide();
+		        }
+		      }]
+		    });
+		}
+
+
+
 
 
 });
