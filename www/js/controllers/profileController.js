@@ -17,7 +17,8 @@ paradropCtrl.controller('profileCtrl',
 			$scope.showData = true;
 			$scope.totalActivities = activityDoneList.length;
 		}
-
+		// Type 0 = Carbon Points
+		// Type 1 = Water Points
 		var getTotalPointsSaved = function () {
 			var activity;
 			var returnData = [0,0];
@@ -211,9 +212,10 @@ paradropCtrl.controller('profileCtrl',
 			}
 
 			for (i = 1; i < allWeeksData.length; i++) {
+				debugger;
 				if (allWeeksData[i].totalPoints >= higherValue) {
 					index = i;
-					lowerValue = allWeeksData[i].totalPoints;
+					higherValue = allWeeksData[i].totalPoints;
 				}
 			}
 			return allWeeksData[index];
@@ -401,6 +403,9 @@ paradropCtrl.controller('profileCtrl',
 
 		}
 
+
+			//Day Object = {0: Carbon Points, 1: Water Points}
+		//The key os the day of the week - 0: Sunday --  Saturday
 		var getPointsThisWeek = function () {
 			var d = new Date();
 			var activity;
@@ -449,6 +454,8 @@ paradropCtrl.controller('profileCtrl',
 
 		}
 
+
+
 		$scope.thisWeek = function() {
 
 			var pointsThisWeek = getPointsThisWeek();
@@ -458,14 +465,17 @@ paradropCtrl.controller('profileCtrl',
 				myLineChart.addData(pointsThisWeek[weekDay], getDayTitle(weekDay));
 			}
 
-
+			//
 			if (numNewDataPoints == 1){
 				$scope.notEnoughData = true;
+				return
 			}
 
+
+			//If we remo
 			removeOldData(numNewDataPoints);
 
-		  	myLineChart.update();
+		  myLineChart.update();
 
 		}
 
