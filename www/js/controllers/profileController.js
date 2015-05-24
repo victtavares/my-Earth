@@ -212,7 +212,6 @@ paradropCtrl.controller('profileCtrl',
 			}
 
 			for (i = 1; i < allWeeksData.length; i++) {
-				debugger;
 				if (allWeeksData[i].totalPoints >= higherValue) {
 					index = i;
 					higherValue = allWeeksData[i].totalPoints;
