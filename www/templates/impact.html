@@ -7,14 +7,37 @@
     </ion-nav-buttons>
     <ion-content class="has-header content-bg">
 
-    <h2 style="text-align: center; margin-top: 12px">Level {{tier}}</h2>
+    <h2 style="text-align: center; margin-top: 12px; margin-bottom: 0px">Level {{tier}}</h2>
         
-    <ion-slide-box show-pager="false">
+    <div class="row" style="width: 60%; margin-left: 20%; margin-top: 0px">
+      <div class="col col-20">
+        <img ng-show="prestigeLevel == 0" src="img/star-outline.png" style="width: 28px"></img>
+        <img ng-show="prestigeLevel >= 1" src="img/star-filled.png" style="width: 28px"></img>
+      </div>
+      <div class="col col-20">
+        <img ng-show="prestigeLevel < 2" src="img/star-outline.png" style="width: 28px"></img>
+        <img ng-show="prestigeLevel >= 2" src="img/star-filled.png" style="width: 28px"></img>
+      </div>
+      <div class="col col-20">
+        <img ng-show="prestigeLevel < 3" src="img/star-outline.png" style="width: 28px"></img>
+        <img ng-show="prestigeLevel >= 3" src="img/star-filled.png" style="width: 28px"></img>
+      </div>
+      <div class="col col-20">
+        <img ng-show="prestigeLevel < 4" src="img/star-outline.png" style="width: 28px"></img>
+        <img ng-show="prestigeLevel >= 4" src="img/star-filled.png" style="width: 28px"></img>
+      </div>
+      <div class="col col-20">
+        <img ng-show="prestigeLevel < 5" src="img/star-outline.png" style="width: 28px"></img>
+        <img ng-show="prestigeLevel >= 5" src="img/star-filled.png" style="width: 28px"></img>
+      </div>
+    </div>
+
+    <ion-slide-box show-pager="true">
       <ion-slide>
-        <img src="img/bear-{{tier}}.jpg" style="width: 86%; margin-left: 7%"></img>
+        <img src="img/bear-{{tier}}.jpg" style="width: 86%; margin-left: 7%" ng-click="modal.show()"></img>
       </ion-slide>
       <ion-slide>
-        <img src="img/forest-{{tier}}.jpg" style="width: 86%; margin-left: 7%"></img>
+        <img src="img/forest-{{tier}}.jpg" style="width: 86%; margin-left: 7%" ng-click="modal.show()"></img>
       </ion-slide>
     </ion-slide-box>
 
@@ -25,6 +48,12 @@
     </div>
 
     <h5 style="text-align: center; width: 86%; margin-left: 7%; font-size: 14px" ><b ng-if="congrats">Congratulations!<br></b>{{progressToNextLevel}}</h5>
+
+    <br>
+
+    <div class="center">
+      <button ng-disabled="tier < 7" class="button button-dark" ng-click="attemptPrestige()">Prestige Levels</button>
+    </div>
 
     </ion-content>
 </ion-view>

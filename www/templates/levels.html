@@ -1,0 +1,20 @@
+<div class="modal">
+    <!-- Modal header bar -->
+    <ion-header-bar class="bar-positive headerBG green-background">
+    <h1 class="title headerText">Previous Levels</h1>
+    <a ng-click="closeLevelModal()"><button class="button button-clear button-white">Cancel</button></a>
+</ion-header-bar>
+
+<!-- Modal content area -->
+<ion-content class="contentBG"  has-bouncing="true">
+
+    <ion-slide-box show-pager="true">
+      <ion-slide ng-repeat="level in levels track by $index | limitTo: 3">
+        <h2 style="text-align: center; margin-top: 16px">Level {{$index + 1}}</h2>
+        <img src="img/bear-{{$index + 1}}.jpg" style="width: 60%; margin-left: 20%; margin-bottom: 12px" ng-click="modal.show()"></img>
+        <img src="img/forest-{{$index + 1}}.jpg" style="width: 60%; margin-left: 20%" ng-click="modal.show()"></img>
+      </ion-slide>
+    </ion-slide-box>
+
+</ion-content>
+</div>

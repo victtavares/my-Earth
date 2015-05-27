@@ -1,19 +1,11 @@
 var paradropCtrl = angular.module('controllers.impact',[]);
 
 paradropCtrl.controller('impactCtrl',
-    function($scope, $state, activityDoneList) {
+    function($scope, $state, activityDoneList, $ionicModal, $ionicPopup, $ionicLoading) {
 
     if(typeof analytics !== "undefined") {
         analytics.trackView('My Impact');
     }
-        bearImage = Parse.User.current().get('bearImage');
-        console.log(bearImage);
-
-        $scope.bearOrForest = 'forest';
-
-        if (bearImage) {
-            $scope.bearOrForest = 'polarBear';
-        }
 
 		var getTotalPointsSaved = function () {
 			var activity;
@@ -33,7 +25,16 @@ paradropCtrl.controller('impactCtrl',
 		var totalPoints = getTotalPointsSaved();
 		console.log(totalPoints);
 
-    	var lbsCarbonAllTime = totalPoints[0];
+        //if prestige, then calculate level from the prestige value
+        $scope.prestigeLevel = 0;
+        var prestigeValue = 0;
+
+        if (Parse.User.current().get('prestigeLevel')) {
+            $scope.prestigeLevel = Parse.User.current().get('prestigeLevel');
+            prestigeValue = Parse.User.current().get('prestigeValue');
+        }
+
+    	var lbsCarbonAllTime = totalPoints[0] - prestigeValue;
 
     	var conversionMultiplier = .04088171;
     	var secondaryMultiplier = .83;
@@ -60,10 +61,10 @@ paradropCtrl.controller('impactCtrl',
             console.log(carbonToSaveForPrevLevel + " and " + carbonToSaveForNextLevel);
             console.log(progressToNext + " from "  + thisLevelsBeginning);
 
-    		$scope.progressToNextLevel = "Keep up the good work! You have to save " + progressToNext + " more pounds to advance to the next level.";
+    		$scope.progressToNextLevel = "Keep up the good work! You have to save " + progressToNext + " more pounds to advance.";
 
     		if (progressToNext == 1) {
-    			$scope.progressToNextLevel = "Keep up the good work! You have to save " + progressToNext + " more pound to advance to the next level.";
+    			$scope.progressToNextLevel = "Keep up the good work! You have to save " + progressToNext + " more pound to advance.";
     		}
 
             percentDone = 100*(lbsCarbonAllTime - thisLevelsBeginning)/(carbonToSaveForNextLevel - thisLevelsBeginning);
@@ -78,5 +79,79 @@ paradropCtrl.controller('impactCtrl',
 
     	//use tier number to change graphic number
 
+        $scope.levels = [];
+
+        for (var i = 0; i < $scope.tier; i++) {
+            $scope.levels.push(i);
+        }
+
+        // ---------------------- Loading Level Modal ---------------------
+        $ionicModal.fromTemplateUrl('templates/levels.html', function($ionicModal) {
+            $scope.modal = $ionicModal;
+        }, {
+            // Use our scope for the scope of the modal to keep it simple
+            scope: $scope,
+            // The animation we want to use for the modal entrance
+            animation: 'slide-in-up'
+        });
+
+        // ---------------------- close Modal ---------------------
+        $scope.closeLevelModal = function () {
+            $scope.modal.hide();
+        }
+
+        $scope.attemptPrestige = function () {
+
+            var confirm = $ionicPopup.confirm({
+                title: 'Confirm Prestige',
+                template: 'Great work! You achieved level 7. Prestige will give you a star and reset your level to 1. Continue?'
+            });
+
+            confirm.then(function(result) {
+
+                if (result) {
+                    advancePrestige();
+                }
+
+                confirm.close();
+            });
+
+        }
+
+        var advancePrestige = function () {
+
+            $ionicLoading.show({
+                template: 'Loading...'
+            });
+
+            var newPrestigeValue = totalPoints[0];
+            var newPrestigeLevel = $scope.prestigeLevel + 1;
+
+            Parse.User.current().save({
+                prestigeValue: newPrestigeValue, 
+                prestigeLevel: newPrestigeLevel
+            }, {
+                success: function(user) {
+
+                    prestigeValue = newPrestigeValue;
+                    $scope.prestigeLevel = newPrestigeLevel;
+                    $scope.percentDone = 0;
+                    $scope.tier = 1;
+                    $scope.progressToNextLevel = "Keep up the good work! You have to save " + 30 + " more pounds to advance.";
+                    $ionicLoading.hide();
+
+                },
+
+                error: function(user, error) {
+
+                  $ionicLoading.hide();
+                  $ionicPopup.alert({
+                    title: 'Error',
+                    template: "<p>Error. Please try again.</p>",
+                  });
+
+                }
+            });
+        }
 
     });

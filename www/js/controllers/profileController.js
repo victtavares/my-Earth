@@ -494,7 +494,8 @@ paradropCtrl.controller('profileCtrl',
 			$scope.thisWeek();
 		}
 
-		$scope.data = {notificationFrequency: "day"};
+		var d = new Date();
+		$scope.data = {time: d.getHours() + ":" + d.getMinutes()};
 
 		$scope.showAlarmView = function() {
 
@@ -502,28 +503,33 @@ paradropCtrl.controller('profileCtrl',
 		        scope: $scope,
 		        title: 'Reminder',
 		        templateUrl: 'templates/alarm.html',
-		        buttons: [{ text: 'Cancel' }, 
-		        {text: 'Save', 
-		        type: 'button-balanced',
-		        onTap: function(e) {
+		        buttons: 
+		        [{ text: 'Cancel' }, 
+		        	{text: 'Save', 
+		        	type: 'button-balanced',
+			        onTap: function(e) {
 
-		        	var desiredDate = moment();
-		        	desiredDate.add(1,"day")
-		        	desiredDate.set({'hour': 15, 'minute': 00});
+			        	var hrs = $scope.data.time.substring(0, 2);
+			        	var min = $scope.data.time.substring(3, 5);
 
-		        	//Cancel Previous Notification
-		        	window.plugin.notification.local.cancel(1, function() {});
-		          	window.plugin.notification.local.schedule({
-	                     id: 1,
-	                     text: 'Remember to complete your carbon activities!',
-	                     every: $scope.data.notificationFrequency,
-	                     firstAt: desiredDate.toDate()
-		          	});
+			        	var desiredDate = moment();
+			        	desiredDate.set({'hour': hrs, 'minute': min});
 
-					alertPopup.close();
+			        	console.log(desiredDate);
 
-		        }
-		      }]
+			        	//Cancel Previous Notification
+			        	window.plugin.notification.local.cancel(1, function() {});
+			          	window.plugin.notification.local.schedule({
+		                     id: 1,
+		                     text: 'Remember to complete your carbon activities!',
+		                     every: 'day',
+		                     firstAt: desiredDate.toDate()
+			          	});
+
+						alertPopup.close();
+
+			        }
+			    }]
 		    });
 
 		}

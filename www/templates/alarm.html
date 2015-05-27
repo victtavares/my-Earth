@@ -1,16 +1,12 @@
 <div>
-<h5> Add a reminder for your activities: </h5>
+<h5 style="text-align: center"> Add a daily reminder to complete your activities: </h5>
 
   <label class="item item-input item-select">
     <div class="input-label">
-      Frequency
+      Time
     </div>
-    <select ng-model="data.notificationFrequency">
-      <option selected value="day">Daily</option>
-      <option value="week">Weekly</option>
-      <option value="month">Monthly</option>
-    </select>
+    <input type="time" ng-model="data.time">
+    </input>
   </label>
 
-</div>
 </div>

@@ -9,6 +9,10 @@
          url('../lib/ionic/fonts/MontserratRegular.svg#MontserratRegular') format('svg');
 }
 
+.slider-pager .slider-pager-page {
+  color: #fff !important;
+}
+
 #forgotPassText {
 
   text-align: center;
