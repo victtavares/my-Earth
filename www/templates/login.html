@@ -1,27 +1,11 @@
 <ion-view title="My Earth" class="headerText">
     <img ng-src="img/loginScreen.png" class="background-image">
-    <form ng-submit="login()">
-        <h1 style="text-align: center; position: relative; color: white; font-family: Lucida Sans Unicode; font-size: 52px; font-weight: bold; margin-top: 25%" id="titleText">MyEarth</h1>
-        <div class="list list-inset loginFields">
-             <label class="item item-input loginEmailPass">
-                <span class="input-label" style="color: white">Email</span>
-                <input type="email" ng-model="loginData.username" style="color: white">
-              </label>
-              <label class="item item-input loginEmailPass">
-                <span class="input-label" style="color: white">Password</span>
-                <input type="password" ng-model="loginData.password" style="color: white">
-              </label>
-        </div>
-        <div class="padding">
-            <button class="button button-block login-button" type="submit">Log in</button>
-        </div>
-        
-        <a><p id="forgotPassText" ng-click="forgotmodal.show()" style="position: relative; color: white; font-weight: bold; font-size: 14px">Forgot Password?</p></a>
-
-    </form>
 
     <div class="bottom-login-div">
-        <button class="button button-block signup-button" ng-click="modal.show()">Sign Up Now</button>
+      <button class="button button-block bottom-button green-background " ng-click="registerModal.show()">Sign up
+      </button>
+      <button class="button button-block bottom-button blue-background " ng-click="loginModal.show()"> Log in
+      </button>
       </div>
-            
+       
 </ion-view>

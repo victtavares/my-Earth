@@ -15,6 +15,7 @@ myEarthCtrl.controller('registerCtrl',
         $ionicLoading.show({
           template: 'Loading...'
         });
+        
         if (($scope.registerData) && ($scope.registerData.password) && ($scope.registerData.username) ) {
 
             var user = new Parse.User();
@@ -45,12 +46,12 @@ myEarthCtrl.controller('registerCtrl',
                 },
 
                 error: function(user, error) {
-
+                  console.log(error);
                   $ionicLoading.hide();
                   $scope.closeSignUp();
                   $ionicPopup.alert({
                     title: 'Error',
-                    template: "<p>Error in account creation. Please try again.</p>",
+                    template: "<p class= \"center\">" + error.message +  "</p>",
                     okText: 'OK'
                   });
 
@@ -62,7 +63,7 @@ myEarthCtrl.controller('registerCtrl',
             $ionicLoading.hide();
             $ionicPopup.alert({
               title: 'Blank fields',
-              template: "<p>You missed one or more entries</p>",
+              template: "<p class= \"center\">You missed one or more entries</p>",
               okText: 'OK'
             });
         }

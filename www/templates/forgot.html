@@ -1,6 +1,6 @@
 <div class="modal">
     <!-- Modal header bar -->
-    <ion-header-bar class="bar-positive headerBG green-background">
+    <ion-header-bar class="bar-positive green-background">
     <h1 class="title headerText">Forgot Password</h1>
     <a ng-click="closeForgot()"><button class="button button-clear button-white">Cancel</button></a>
 </ion-header-bar>
@@ -8,7 +8,7 @@
 <!-- Modal content area -->
 <ion-content class="contentBG"  has-bouncing="true">
 
-<form ng-submit="checkUserInfoForNewPass()">
+<form ng-submit="sendNewPasswordEmail()">
     <p id="forgotText">Enter your email and we'll shoot you a link <br> to reset your password.</p>
     
     <div class="list list-inset">
@@ -19,10 +19,13 @@
     </div>
     
     <div class="padding">
-        <button class="button button-block button-positive login-button" type="submit">Email Me</button>
+        <button class="button button-block button-balanced green-background" type="submit">Email Me</button>
     </div>
 
 </form>
 
 </ion-content>
 </div>
+
+<script>
+</script>

@@ -28,7 +28,7 @@ myEarthCtrl.controller('loginCtrl', function ($scope, $rootScope, $ionicPopup, $
             console.log('parse request: user login');
             Parse.User.logIn($scope.loginData.username, $scope.loginData.password, {
                 success: function(privUser) {
-
+                    $scope.closeLogin()
                     $localStorage.set('lastUserEmail', $scope.loginData.username);
 
                     $ionicLoading.hide();
@@ -42,7 +42,7 @@ myEarthCtrl.controller('loginCtrl', function ($scope, $rootScope, $ionicPopup, $
 
                     $ionicPopup.alert({
                         title: 'Login Failed',
-                        template: "<p>Username/Password combination is incorrect.</p>",
+                        template: "<p class= \"center\">Username/Password combination is incorrect.</p>",
                         okText: 'OK'
                     });
                     
@@ -55,7 +55,7 @@ myEarthCtrl.controller('loginCtrl', function ($scope, $rootScope, $ionicPopup, $
             $ionicLoading.hide();
             $ionicPopup.alert({
                 title: 'Blank Fields',
-                template: "<p>You must enter a username and password to log in.</p>",
+                template: "<p class= \"center\">You must enter a username and password to log in.</p>",
                 okText: 'OK'
             });
         }
@@ -65,7 +65,7 @@ myEarthCtrl.controller('loginCtrl', function ($scope, $rootScope, $ionicPopup, $
     // ---------------------- Loading Signup Modal ---------------------
     $ionicModal.fromTemplateUrl('templates/register.html', function($ionicModal) {
 
-        $scope.modal = $ionicModal;
+        $scope.registerModal = $ionicModal;
     }, {
         // Use our scope for the scope of the modal to keep it simple
         scope: $scope,
@@ -97,47 +97,41 @@ myEarthCtrl.controller('loginCtrl', function ($scope, $rootScope, $ionicPopup, $
     });
 
 
+        // ---------------------- Loading Login Modal ---------------------
+    $ionicModal.fromTemplateUrl('templates/loginModal.html', function($ionicModal) {
+
+        $scope.loginModal = $ionicModal;
+    }, {
+        // Use our scope for the scope of the modal to keep it simple
+        scope: $scope,
+        // The animation we want to use for the modal entrance
+        animation: 'slide-in-up'
+    });
+
+
+
+        // ---------------------- close forgot Modal ---------------------
+    $scope.closeLogin = function () {
+        $scope.loginModal.hide();
+    }
+
+
     // ---------------------- close forgot Modal ---------------------
     $scope.closeForgot = function () {
         $scope.forgotmodal.hide();
     }
 
 
-    $scope.checkUserInfoForNewPass = function () {
+
+    // ---------------------- send email to forgot password ---------------------
+    $scope.sendNewPasswordEmail = function () {
+
 
         var email = $scope.forgotData.email;
-
-        var query = new Parse.Query(Parse.User);
-        query.equalTo("username", email);
-
-        console.log('parse request: check email to reset password');
-        query.find({
-          success: function(users) {
-
-                if (users.length > 0) {
-                    
-                    $scope.closeForgot();
-                    sendNewPasswordEmail(email);
-                
-                } else {
-                    
-                    $ionicPopup.alert({
-                        title: 'Error',
-                        template: "<p>Could not find user account.</p>",
-                        okText: 'OK'
-                    });
-                }
-
-            }
-        });
-    }
-    
-
-    function sendNewPasswordEmail(email) {
-
         console.log('parse request: send password reset email');
         Parse.User.requestPasswordReset(email, {
             success:function() {
+                $scope.closeForgot();
                 $ionicPopup.alert({
                     title: 'Email Sent Successfully'
                 });
@@ -148,12 +142,14 @@ myEarthCtrl.controller('loginCtrl', function ($scope, $rootScope, $ionicPopup, $
                 });
             }
         });
-    } 
+    }
+    
+
 
 
     // ---------------------- close Modal ---------------------
     $scope.closeSignUp = function () {
-        $scope.modal.hide();
+        $scope.registerModal.hide();
     }
 
     // ---------------------- close Modal ---------------------
