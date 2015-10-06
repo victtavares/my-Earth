@@ -9,15 +9,28 @@ var app = angular.module('earthApp', [
     'controllers.impact',
     'controllers.profile',
     'services.activityModel',
+    'services.offerModel',
     'controllers.about',
     'controllers.calc'
 ]);
 
-//---------------------------------- App Run method ----------------------------------
-app.run(function($ionicPlatform,$rootScope,$state,$http,$cordovaLocalNotification) {
+
+
+app.run(function($ionicPlatform,$rootScope,$state,$http,$cordovaLocalNotification,$offerModel) {
+
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     $ionicPlatform.ready(function() {
+
+        //invite user to rate app after he uses the app for 10 times
+        $offerModel.createOffer({
+            showOnCount  : 10,
+            title        : 'A Special Offer',
+            text         : 'If you enjoy this app please take a moment to rate it',
+            agreeLabel   : 'Rate App',
+            remindLabel  : 'Remind Me Later',
+            declineLabel : 'Not interested'
+        });
 
         if(device.platform === "iOS") {
             $cordovaLocalNotification.promptForPermission();
@@ -27,6 +40,7 @@ app.run(function($ionicPlatform,$rootScope,$state,$http,$cordovaLocalNotificatio
         if(window.cordova && window.cordova.plugins.Keyboard) {
             cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
         }
+
         if(window.StatusBar) {
             StatusBar.styleDefault();
         }
@@ -35,9 +49,9 @@ app.run(function($ionicPlatform,$rootScope,$state,$http,$cordovaLocalNotificatio
         if(typeof analytics !== "undefined") {
             analytics.startTrackerWithId('UA-61409067-1');
           console.log('loaded google analytics');
-      } else {
+        } else {
           console.log("Google Analytics Unavailable");
-      }
+        }
 
     });
 
