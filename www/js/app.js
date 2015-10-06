@@ -9,12 +9,24 @@ var app = angular.module('earthApp', [
     'controllers.impact',
     'controllers.profile',
     'services.activityModel',
+    'services.offerModel',
     'controllers.about',
     'controllers.calc'
 ]);
 
 
-app.run(function($ionicPlatform,$rootScope,$state,$http,$cordovaLocalNotification) {
+app.run(function($ionicPlatform,$rootScope,$state,$http,$cordovaLocalNotification,$offerModel) {
+
+    //invite user to rate app after he uses it for 10 times
+    $offerModel.createOffer({
+            showOnCount  : 10,
+            title        : 'A Special Offer',
+            text         : 'If you enjoy this app please take a moment to rate it',
+            agreeLabel   : 'Rate App',
+            remindLabel  : 'Remind Me Later',
+            declineLabel : 'Not interested'
+    });
+
 
    // When the user is going to another page!
     $rootScope.$on('$stateChangeStart',function(event, toState, toParams, fromState, fromParams) {
