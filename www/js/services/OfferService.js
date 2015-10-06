@@ -26,21 +26,24 @@ myEarthService.factory('$offerModel', function($q, $localStorage) {
             specialOffer = {enabled: true, countOpens: 1};
         }
 
-        var onAgree = function () {
-            specialOffer.enabled = false
+        var onAgree = function (offer) {
+            offer.enabled = false
             if (window.device.platform === 'iOS') {
                 window.open(service.appStoreUrl());
             } else if (window.device.platform === 'Android') {
                 window.open(service.googlePlayUrl("androidPackageName"));
             }
+            $localStorage.setObject('specialOffer',offer);
         }
 
-        var onDecline = function() {
-            specialOffer.enabled = false;
+        var onDecline = function(offer) {
+            offer.enabled = false;
+            $localStorage.setObject('specialOffer',offer);
         }
 
-        var onRemindMeLater = function() {
-            specialOffer.countOpens = 1;
+        var onRemindMeLater = function(offer) {
+            offer.countOpens = 1;
+            $localStorage.setObject('specialOffer',offer);
         }
 
         var onResume = function () {
@@ -51,13 +54,13 @@ myEarthService.factory('$offerModel', function($q, $localStorage) {
                 var clickHandler = function (buttonIndex) {
                     switch (buttonIndex) {
                         case 1:
-                            onAgree();
+                            onAgree(specialOffer);
                             break;
                         case 2:
-                            onDecline();
+                            onDecline(specialOffer);
                             break;
                         case 3:
-                            onRemindMeLater();
+                            onRemindMeLater(specialOffer);
                             break;
                             }
                 };

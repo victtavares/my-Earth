@@ -19,7 +19,7 @@ app.run(function($ionicPlatform,$rootScope,$state,$http,$cordovaLocalNotificatio
 
     //invite user to rate app after he uses it for 10 times
     $offerModel.createOffer({
-            showOnCount  : 10,
+            showOnCount  : 3,
             title        : 'A Special Offer',
             text         : 'If you enjoy this app please take a moment to rate it',
             agreeLabel   : 'Rate App',
