@@ -3,7 +3,8 @@ var myEarthService = angular.module('services.offerModel', []);
 myEarthService.factory('$offerModel', function($q, $localStorage) {
     var service = {};
     var iosAppID = "982015211";
-
+    var androidAppId = "com.ionicframework.myearthapp496614";
+    
     service.appStoreUrl = function() {
         var reviewURL = '';
         if (window.device && parseInt(window.device.version) >= 7) {
@@ -14,7 +15,7 @@ myEarthService.factory('$offerModel', function($q, $localStorage) {
         return reviewURL;
     }
 
-    service.googlePlayUrl = function(androidAppId) {
+    service.googlePlayUrl = function() {
         return 'market://details?id=' + androidAppId;
     }
 
@@ -31,7 +32,7 @@ myEarthService.factory('$offerModel', function($q, $localStorage) {
             if (window.device.platform === 'iOS') {
                 window.open(service.appStoreUrl());
             } else if (window.device.platform === 'Android') {
-                window.open(service.googlePlayUrl("androidPackageName"));
+                window.open(service.googlePlayUrl());
             }
             $localStorage.setObject('specialOffer',offer);
         }
