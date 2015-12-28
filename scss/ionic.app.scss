@@ -15,9 +15,18 @@ $royal:                           #8a6de9 !default;
 $dark:                            #444 !default;
 */
 
+$dark:      #363636;
+$assertive: #a00000;
+$royal: #ffffff;
+
+$font-family-sans-serif:          "Montserrat Bold", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif !default;
+$font-family-light-sans-serif:    "Montserrat Regular", "Helvetica Neue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif !default;
+
+
+
+
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 // Include all of Ionic
-@import "www/lib/ionic/scss/ionic";
-
+@import "../www/lib/ionic/scss/ionic";

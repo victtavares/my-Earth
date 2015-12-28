@@ -10,6 +10,20 @@ paradropCtrl.controller('timelineCtrl',
             analytics.trackView('Activities');
         }
 
+
+        if (!Parse.User.current().get('activityCount')){
+            Parse.Cloud.run('migrateActivityCount', {
+                success: function() {
+                    Parse.User.current().fetch();
+                    console.log('migrated');
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            })
+        }
+
+
         //basics
 
         $scope.activityAddedPhrase = "Added!";
@@ -417,6 +431,7 @@ paradropCtrl.controller('timelineCtrl',
 
             $localStorage.set('reminderExists', true);
 
+            if (!!cordova)
             cordova.plugins.notification.local.schedule({
                 id: 1,
                 title: "MyEarth",
@@ -428,6 +443,7 @@ paradropCtrl.controller('timelineCtrl',
         }
 
         function deleteReminder() {
+            if (!!cordova)
             cordova.plugins.notification.local.cancel(1, function () {
             }, null);
         }

@@ -15,7 +15,7 @@ paradropCtrl.controller('profileCtrl',
 			document.getElementById('textIfNoItems').style.display = 'block';
 		} else {
 			$scope.showData = true;
-			$scope.totalActivities = activityDoneList.length;
+			$scope.totalActivities = Parse.User.current().get('activityCount') || activityDoneList.length;
 		}
 		// Type 0 = Carbon Points
 		// Type 1 = Water Points
@@ -29,6 +29,10 @@ paradropCtrl.controller('profileCtrl',
 				} else {
 					returnData[1] = returnData[1] + activity.get("points");
 				}
+			}
+
+			if (Parse.User.current().get('carbonSaved')){
+				returnData = [Parse.User.current().get('carbonSaved'),Parse.User.current().get('waterSaved')];
 			}
 
 			return returnData;

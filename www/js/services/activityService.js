@@ -21,7 +21,7 @@ myEarthService.factory('activityModel', function($q) {
         var query = new Parse.Query(activity_user);
         query.limit(1000);
         query.equalTo("user",user);
-        query.ascending("createdAt");
+        query.descending("createdAt");
         query.include("activity");
         query.find({
             success: onSuccess,
@@ -35,9 +35,17 @@ myEarthService.factory('activityModel', function($q) {
 
     service.doActivity = function(activity) {
 
-
         var user = Parse.User.current();
         var activity_user = new Parse.Object("ActivityDone_user");
+
+        user.increment('activityCount');
+
+        if (activity.get('pointCategory') === 'Gallons of Water') {
+            user.set('waterSaved', user.get('waterSaved') + activity.get('points'));
+        } else {
+            user.set('carbonSaved', user.get('carbonSaved') + activity.get('points'));
+        }
+
         activity_user.set("user",user);
         activity_user.set("activity", activity);
 
