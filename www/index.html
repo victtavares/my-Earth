@@ -41,13 +41,11 @@
 </head>
 
 <body ng-app="earthApp">
-<ion-nav-view></ion-nav-view>
+  <ion-nav-view></ion-nav-view>
 
-<script type="text/javascript">
-
-  Parse.initialize("oFffJGPeIBUR5qMb67Jf6t9ClHoaBMVTaSxLa0sX", "qJtW1jP9wjJrfnkdbmrDgOKwiUr4OIypTLU3GK0X");
-
+  <script type="text/javascript">
+    Parse.initialize("oFffJGPeIBUR5qMb67Jf6t9ClHoaBMVTaSxLa0sX");
+    Parse.serverURL = "https://myearthapp.org/parse";
   </script>
-
 </body>
 </html>
