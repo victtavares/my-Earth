@@ -21,7 +21,7 @@ myEarthService.factory('activityModel', function($q) {
         var query = new Parse.Query(activity_user);
         query.limit(1000);
         query.equalTo("user",user);
-        query.descending("createdAt");
+        query.ascending("createdAt");
         query.include("activity");
         query.find({
             success: onSuccess,
