@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.ionicframework.myearthapp496614" android-versionCode="500011" version="5.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="500011" id="com.ionicframework.myearthapp496614" version="5.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>MyEarth</name>
   <description>
         Developed by John Meurer and Victor Tavares
@@ -18,7 +18,7 @@
   <preference name="SplashScreen" value="screen"/>
   <preference name="SplashScreenDelay" value="3000"/>
   <feature name="StatusBar">
-    <param name="ios-package" value="CDVStatusBar" onload="true"/>
+    <param name="ios-package" onload="true" value="CDVStatusBar"/>
   </feature>
   <platform name="android">
     <icon src="resources/android/icon/drawable-ldpi-icon.png" density="ldpi"/>
@@ -69,4 +69,8 @@
     <splash src="resources/ios/splash/Default~iphone.png" width="320" height="480"/>
   </platform>
   <icon src="resources/android/icon/drawable-xhdpi-icon.png"/>
+  <plugin name="cordova-plugin-device" spec="~1.1.4"/>
+  <plugin name="cordova-plugin-google-analytics" spec="~1.0.0"/>
+  <plugin name="cordova-plugin-keyboard" spec="~1.1.4"/>
+  <plugin name="cordova-plugin-whitelist" spec="~1.3.1"/>
 </widget>
