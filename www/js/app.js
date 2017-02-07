@@ -37,7 +37,9 @@ app.run(function($ionicPlatform,$rootScope,$state,$http,$cordovaLocalNotificatio
         }
 
 
-        if(window.cordova && window.cordova.plugins.Keyboard) {
+        if(typeof Keyboard !== "undefined") {
+            Keyboard.hideFormAccessoryBar(true);
+        } else if(window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
             cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
         }
 
