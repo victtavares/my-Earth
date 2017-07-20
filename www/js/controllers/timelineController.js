@@ -60,7 +60,11 @@ paradropCtrl.controller('timelineCtrl',
 
         var query = new Parse.Query('Activity');
         console.log('parse request: get activity list');
-        
+
+        // Override the implicit limit of 100.  If there are more than 1000
+        // activities for users to choose from, we will need to use pagination.
+        query.limit(1000);
+
         query.find({
             
             success: function(activities) {

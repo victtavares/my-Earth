@@ -1,5 +1,43 @@
 var myEarthService = angular.module('services.activityModel', []);
 
+
+// Maximum number of objects to retrieve in one query.  The Parse API documents
+// specify 1000 as the maximum permitted value for this, even though the open
+// source Parse server does seem to accept larger limits.
+var QUERY_LIMIT = 1000;
+
+
+// Recursively complete queries that may exceed the individual query limit by
+// paging through the results with the skip option and concatenating them.
+var recursiveQuery = function(query, deferred, skip, prev_results) {
+    // Initialize for the first iteration.
+    if (!skip) {
+        skip = 0;
+    }
+    if (!prev_results) {
+        prev_results = [];
+    }
+
+    query.limit(QUERY_LIMIT);
+    query.skip(skip);
+
+    query.find().then(
+        function(results) {
+            var all_results = prev_results.concat(results);
+
+            if (results.length === QUERY_LIMIT) {
+                recursiveQuery(query, deferred, skip+QUERY_LIMIT, all_results);
+            } else {
+                deferred.resolve(all_results);
+            }
+        },
+        function(error) {
+            deferred.reject("Error: " + error);
+        }
+    );
+}
+
+
 myEarthService.factory('activityModel', function($q) {
     var service = {};
     var userTodoList;
@@ -10,26 +48,14 @@ myEarthService.factory('activityModel', function($q) {
         var activity_user = Parse.Object.extend("ActivityDone_user");
         var deferred  = $q.defer();
 
-        var onSuccess, onError;
-        onSuccess = function (results) {
-            deferred.resolve(results);
-        }
-
-        onError = function (error) {
-            deferred.reject("Error: " + error);
-        }
         var query = new Parse.Query(activity_user);
-        query.limit(1000);
         query.equalTo("user",user);
         query.ascending("createdAt");
         query.include("activity");
-        query.find({
-            success: onSuccess,
-            error: onError
-        });
+
+        recursiveQuery(query, deferred);
 
         return deferred.promise;
-
     }
 
 
